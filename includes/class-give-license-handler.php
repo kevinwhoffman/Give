@@ -78,15 +78,6 @@ if ( ! class_exists( 'Give_License' ) ) :
 		private $checkout_url = 'http://givewp.com/checkout/';
 
 		/**
-		 * API URL
-		 *
-		 * @access private
-		 *
-		 * @var    string
-		 */
-		private $api_url = 'https://givewp.com/give-sl-api/';
-
-		/**
 		 * Class Constructor
 		 *
 		 * Set up the Give License Class.
