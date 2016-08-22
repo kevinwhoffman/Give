@@ -22,11 +22,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return bool $ret True if return mode is enabled, false otherwise
  */
 function give_is_test_mode() {
-	global $give_options;
 
-	$ret = ! empty( $give_options['test_mode'] );
+	$ret = give_get_option('test_mode', false);
 
 	return (bool) apply_filters( 'give_is_test_mode', $ret );
+
 }
 
 /**
@@ -36,8 +36,8 @@ function give_is_test_mode() {
  * @return string The currency code
  */
 function give_get_currency() {
-	global $give_options;
-	$currency = isset( $give_options['currency'] ) ? $give_options['currency'] : 'USD';
+
+	$currency = give_get_option( 'currency', 'USD' );
 
 	return apply_filters( 'give_currency', $currency );
 }
@@ -50,8 +50,8 @@ function give_get_currency() {
  * @return string The currency code
  */
 function give_get_currency_position() {
-	global $give_options;
-	$currency_pos = isset( $give_options['currency_position'] ) ? $give_options['currency_position'] : 'before';
+
+	$currency_pos = give_get_option( 'currency_position', 'before' );
 
 	return apply_filters( 'give_currency_position', $currency_pos );
 }
@@ -63,35 +63,39 @@ function give_get_currency_position() {
  * @since 1.0
  * @return array $currencies A list of the available currencies
  */
+
 function give_get_currencies() {
 	$currencies = array(
-		'USD'  => __( 'US Dollars ($)', 'give' ),
-		'EUR'  => __( 'Euros (€)', 'give' ),
-		'GBP'  => __( 'Pounds Sterling (£)', 'give' ),
-		'AUD'  => __( 'Australian Dollars ($)', 'give' ),
-		'BRL'  => __( 'Brazilian Real (R$)', 'give' ),
-		'CAD'  => __( 'Canadian Dollars ($)', 'give' ),
-		'CZK'  => __( 'Czech Koruna (Kč)', 'give' ),
-		'DKK'  => __( 'Danish Krone (kr)', 'give' ),
-		'HKD'  => __( 'Hong Kong Dollar ($)', 'give' ),
-		'HUF'  => __( 'Hungarian Forint (Ft)', 'give' ),
-		'ILS'  => __( 'Israeli Shekel (₪)', 'give' ),
-		'JPY'  => __( 'Japanese Yen (¥)', 'give' ),
-		'MYR'  => __( 'Malaysian Ringgits (RM)', 'give' ),
-		'MXN'  => __( 'Mexican Peso ($)', 'give' ),
-		'NZD'  => __( 'New Zealand Dollar ($)', 'give' ),
-		'NOK'  => __( 'Norwegian Krone (Kr.)', 'give' ),
-		'PHP'  => __( 'Philippine Pesos (₱)', 'give' ),
-		'PLN'  => __( 'Polish Zloty (zł)', 'give' ),
-		'SGD'  => __( 'Singapore Dollar ($)', 'give' ),
-		'SEK'  => __( 'Swedish Krona (kr)', 'give' ),
-		'CHF'  => __( 'Swiss Franc (CHF)', 'give' ),
-		'TWD'  => __( 'Taiwan New Dollars (NT$)', 'give' ),
-		'THB'  => __( 'Thai Baht (฿)', 'give' ),
-		'INR'  => __( 'Indian Rupee (₹)', 'give' ),
-		'TRY'  => __( 'Turkish Lira (₺)', 'give' ),
-		'RIAL' => __( 'Iranian Rial (﷼)', 'give' ),
-		'RUB'  => __( 'Russian Rubles (руб)', 'give' )
+		'USD'  => esc_html__( 'US Dollars ($)', 'give' ),
+		'EUR'  => esc_html__( 'Euros (€)', 'give' ),
+		'GBP'  => esc_html__( 'Pounds Sterling (£)', 'give' ),
+		'AUD'  => esc_html__( 'Australian Dollars ($)', 'give' ),
+		'BRL'  => esc_html__( 'Brazilian Real (R$)', 'give' ),
+		'CAD'  => esc_html__( 'Canadian Dollars ($)', 'give' ),
+		'CZK'  => esc_html__( 'Czech Koruna (Kč)', 'give' ),
+		'DKK'  => esc_html__( 'Danish Krone (kr)', 'give' ),
+		'HKD'  => esc_html__( 'Hong Kong Dollar ($)', 'give' ),
+		'HUF'  => esc_html__( 'Hungarian Forint (Ft)', 'give' ),
+		'ILS'  => esc_html__( 'Israeli Shekel (₪)', 'give' ),
+		'JPY'  => esc_html__( 'Japanese Yen (¥)', 'give' ),
+		'MYR'  => esc_html__( 'Malaysian Ringgits (RM)', 'give' ),
+		'MXN'  => esc_html__( 'Mexican Peso ($)', 'give' ),
+		'MAD'  => esc_html__( 'Moroccan Dirham (&#x2e;&#x62f;&#x2e;&#x645;)', 'give' ),
+		'NZD'  => esc_html__( 'New Zealand Dollar ($)', 'give' ),
+		'NOK'  => esc_html__( 'Norwegian Krone (Kr.)', 'give' ),
+		'PHP'  => esc_html__( 'Philippine Pesos (₱)', 'give' ),
+		'PLN'  => esc_html__( 'Polish Zloty (zł)', 'give' ),
+		'SGD'  => esc_html__( 'Singapore Dollar ($)', 'give' ),
+		'KRW'  => esc_html__( 'South Korean Won (₩)', 'give' ),
+		'ZAR'  => esc_html__( 'South African Rand (R)', 'give' ),
+		'SEK'  => esc_html__( 'Swedish Krona (kr)', 'give' ),
+		'CHF'  => esc_html__( 'Swiss Franc (CHF)', 'give' ),
+		'TWD'  => esc_html__( 'Taiwan New Dollars (NT$)', 'give' ),
+		'THB'  => esc_html__( 'Thai Baht (฿)', 'give' ),
+		'INR'  => esc_html__( 'Indian Rupee (₹)', 'give' ),
+		'TRY'  => esc_html__( 'Turkish Lira (₺)', 'give' ),
+		'RIAL' => esc_html__( 'Iranian Rial (﷼)', 'give' ),
+		'RUB'  => esc_html__( 'Russian Rubles (руб)', 'give' )
 	);
 
 	return apply_filters( 'give_currencies', $currencies );
@@ -101,7 +105,7 @@ function give_get_currencies() {
 /**
  * Give Currency Symbol
  *
- * @description: Given a currency determine the symbol to use. If no currency given, site default is used. If no symbol is determine, the currency string is returned.
+ * Given a currency determine the symbol to use. If no currency given, site default is used. If no symbol is determine, the currency string is returned.
  *
  * @since      1.0
  *
@@ -178,10 +182,20 @@ function give_currency_symbol( $currency = '' ) {
 		case 'CZK' :
 			$symbol = 'Kč';
 			break;
+		case 'KRW' :
+			$symbol = '₩';
+			break;
+		case 'ZAR' :
+			$symbol = 'R';
+			break;
+		case 'MAD' :
+			$symbol = '&#x2e;&#x62f;&#x2e;&#x645;';
+			break;
 		default :
 			$symbol = $currency;
 			break;
 	endswitch;
+
 
 	return apply_filters( 'give_currency_symbol', $symbol, $currency );
 }
@@ -198,7 +212,7 @@ function give_get_current_page_url() {
 	if ( is_front_page() ) {
 		$current_url = home_url( '/' );
 	} else {
-		$current_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		$current_url = set_url_scheme( 'http://' . $_SERVER['HTTP_HOST'] . untrailingslashit( $_SERVER['REQUEST_URI'] ) );
 	}
 
 	return apply_filters( 'give_get_current_page_url', esc_url( $current_url ) );
@@ -300,9 +314,9 @@ function give_get_ip() {
 
 
 /**
- * Store Purchase Data in Sessions
+ * Store Donation Data in Sessions
  *
- * Used for storing info about purchase
+ * Used for storing info about donation
  *
  * @since 1.0
  *
@@ -316,10 +330,10 @@ function give_set_purchase_session( $purchase_data = array() ) {
 }
 
 /**
- * Retrieve Purchase Data from Session
+ * Retrieve Donation Data from Session
  *
- * Used for retrieving info about purchase
- * after completing a purchase
+ * Used for retrieving info about donation
+ * after completing a donation
  *
  * @since 1.0
  * @uses  Give()->session->get()
@@ -330,14 +344,14 @@ function give_get_purchase_session() {
 }
 
 /**
- * Get Purchase Summary
+ * Get Donation Summary
  *
- * Retrieves the purchase summary.
+ * Retrieves the donation summary.
  *
  * @since       1.0
  *
- * @param      $purchase_data
- * @param bool $email
+ * @param array $purchase_data
+ * @param bool  $email
  *
  * @return string
  */
@@ -360,7 +374,7 @@ function give_get_purchase_summary( $purchase_data, $email = true ) {
  * Returns the webhost this site is using if possible
  *
  * @since 1.0
- * @return mixed string $host if detected, false otherwise
+ * @return string $host if detected, false otherwise
  */
 function give_get_host() {
 	$host = false;
@@ -401,7 +415,7 @@ function give_get_host() {
  *
  * @since 1.0
  *
- * @param $host The host to check
+ * @param bool /string $host The host to check
  *
  * @return bool true if host matches, false if not
  */
@@ -480,7 +494,7 @@ function give_is_host( $host = false ) {
 /**
  * Marks a function as deprecated and informs when it has been used.
  *
- * There is a hook edd_deprecated_function_run that will be called that can be used
+ * There is a hook give_deprecated_function_run that will be called that can be used
  * to get the backtrace up to what file and function called the deprecated
  * function.
  *
@@ -493,12 +507,24 @@ function give_is_host( $host = false ) {
  * @uses apply_filters() Calls 'give_deprecated_function_trigger_error' and expects boolean value of true to do
  *   trigger or false to not trigger error.
  *
- * @param string $function The function that was called
- * @param string $version The version of Give that deprecated the function
- * @param string $replacement Optional. The function that should have been called
- * @param array $backtrace Optional. Contains stack backtrace of deprecated function
+ * @param string $function    The function that was called.
+ * @param string $version     The plugin version that deprecated the function.
+ * @param string $replacement Optional. The function that should have been called.
+ * @param array  $backtrace   Optional. Contains stack backtrace of deprecated function.
  */
 function _give_deprecated_function( $function, $version, $replacement = null, $backtrace = null ) {
+
+	/**
+	 * Fires while give deprecated function call occurs.
+	 *
+	 * Allow you to hook to deprecated function call.
+	 *
+	 * @since 1.0
+	 *
+	 * @param string $function    The function that was called.
+	 * @param string $replacement Optional. The function that should have been called.
+	 * @param string $version     The plugin version that deprecated the function.
+	 */
 	do_action( 'give_deprecated_function_run', $function, $replacement, $version );
 
 	$show_errors = current_user_can( 'manage_options' );
@@ -551,7 +577,7 @@ function give_get_php_arg_separator_output() {
  *
  * @since 1.0
  *
- * @param unknown $n
+ * @param int $n
  *
  * @return string Short month name
  */
@@ -581,7 +607,7 @@ function give_is_func_disabled( $function ) {
 /**
  * Give Newsletter
  *
- * @description: Returns the main Give newsletter form
+ * Returns the main Give newsletter form
  */
 function give_get_newsletter() { ?>
 
@@ -589,30 +615,30 @@ function give_get_newsletter() { ?>
 
 		<form action="//givewp.us3.list-manage.com/subscribe/post?u=3ccb75d68bda4381e2f45794c&amp;id=12a081aa13" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
 			<div class="give-newsletter-confirmation">
-				<p><?php _e( 'Thanks for Subscribing!', 'give' ); ?> :)</p>
+				<p><?php esc_html_e( 'Thanks for Subscribing!', 'give' ); ?> :)</p>
 			</div>
 
 			<table class="form-table give-newsletter-form">
 				<tr valign="middle">
 					<td>
-						<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address (required)">
+						<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="<?php esc_attr_e( 'Email Address (required)', 'give' ); ?>">
 					</td>
-
-					<td scope="row">
-						<input type="text" value="" placeholder="First Name" name="FNAME" class="" id="mce-FNAME"></td>
-
-					<td scope="row">
-						<input type="text" value="" placeholder="Last Name" name="LNAME" class="" id="mce-LNAME"></td>
-
-					<td scope="row">
-						<input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+					<td>
+						<input type="text" value="" placeholder="<?php esc_attr_e( 'First Name', 'give' ); ?>" name="FNAME" class="" id="mce-FNAME">
+					</td>
+					<td>
+						<input type="text" value="" placeholder="<?php esc_attr_e( 'Last Name', 'give' ); ?>" name="LNAME" class="" id="mce-LNAME">
+					</td>
+					<td>
+						<input type="submit" value="<?php esc_attr_e( 'Subscribe', 'give' ); ?>" name="subscribe" id="mc-embedded-subscribe" class="button">
 					</td>
 				</tr>
 			</table>
 		</form>
 
 		<div style="position: absolute; left: -5000px;">
-			<input type="text" name="b_3ccb75d68bda4381e2f45794c_12a081aa13" tabindex="-1" value=""></div>
+			<input type="text" name="b_3ccb75d68bda4381e2f45794c_12a081aa13" tabindex="-1" value="">
+		</div>
 
 	</div>
 
@@ -653,15 +679,22 @@ function give_get_newsletter() { ?>
 /**
  * Social Media Like Buttons
  *
- * @description: Various social media elements to Give
+ * Various social media elements to Give
  */
-function give_social_media_elements() { ?>
+function give_social_media_elements() {
+?>
 
 	<div class="social-items-wrap">
 
 		<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fwpgive&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21&amp;appId=220596284639969" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe>
 
-		<a href="https://twitter.com/givewp" class="twitter-follow-button" data-show-count="false">Follow @givewp</a>
+		<a href="https://twitter.com/givewp" class="twitter-follow-button" data-show-count="false"><?php
+			printf(
+				/* translators: %s: Give twitter user @givewp */
+				esc_html_e( 'Follow %s', 'give' ),
+				'@givewp'
+			);
+		?></a>
 		<script>!function (d, s, id) {
 				var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
 				if (!d.getElementById(id)) {
@@ -670,12 +703,14 @@ function give_social_media_elements() { ?>
 					js.src = p + '://platform.twitter.com/widgets.js';
 					fjs.parentNode.insertBefore(js, fjs);
 				}
-			}(document, 'script', 'twitter-wjs');</script>
+			}(document, 'script', 'twitter-wjs');
+		</script>
+
 	</div>
 	<!--/.social-items-wrap -->
 
-
-<?php }
+<?php
+}
 
 
 /**
@@ -711,7 +746,7 @@ function give_svg_icons( $icon ) {
  */
 function modify_nav_menu_meta_box_object( $post_type ) {
 	if ( isset( $post_type->name ) && $post_type->name == 'give_forms' ) {
-		$post_type->labels->name = 'Donation Forms';
+		$post_type->labels->name = esc_html__( 'Donation Forms', 'give' );
 	}
 
 	return $post_type;
@@ -883,4 +918,24 @@ function give_can_view_receipt( $payment_key = '' ) {
 
 	return (bool) apply_filters( 'give_can_view_receipt', $return, $payment_key );
 
+}
+
+/**
+ * Fallback for cal_days_in_month
+ *
+ * Fallback in case the calendar extension is not loaded in PHP; Only supports Gregorian calendar
+ */
+if ( ! function_exists( 'cal_days_in_month' ) ) {
+	/**
+	 * cal_days_in_month
+	 *
+	 * @param $calendar
+	 * @param $month
+	 * @param $year
+	 *
+	 * @return bool|string
+	 */
+	function cal_days_in_month( $calendar, $month, $year ) {
+		return date( 't', mktime( 0, 0, 0, $month, 1, $year ) );
+	}
 }

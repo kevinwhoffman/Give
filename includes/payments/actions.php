@@ -15,16 +15,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Complete a purchase aka donation
+ * Complete a donation
  *
- * Performs all necessary actions to complete a purchase.
+ * Performs all necessary actions to complete a donation.
  * Triggered by the give_update_payment_status() function.
  *
- * @since 1.0
+ * @since  1.0
  *
- * @param int $payment_id the ID number of the payment
- * @param string $new_status the status of the payment, probably "publish"
- * @param string $old_status the status of the payment prior to being marked as "complete", probably "pending"
+ * @param  int    $payment_id The ID number of the payment.
+ * @param  string $new_status The status of the payment, probably "publish".
+ * @param  string $old_status The status of the payment prior to being marked as "complete", probably "pending".
  *
  * @return void
  */
@@ -39,56 +39,56 @@ function give_complete_purchase( $payment_id, $new_status, $old_status ) {
 	if ( $new_status != 'publish' && $new_status != 'complete' ) {
 		return;
 	}
-
+	
 	$payment = new Give_Payment( $payment_id );
 
-	$creation_date    = get_post_field( 'post_date', $payment_id, 'raw' );
-	$payment_meta     = $payment->payment_meta;
-	$completed_date   = $payment->completed_date;
-	$user_info        = $payment->user_info;
-	$customer_id      = $payment->customer_id;
-	$amount           = $payment->total;
-	$payment_details = $payment->payment_details;
+	$creation_date  = get_post_field( 'post_date', $payment_id, 'raw' );
+	$payment_meta   = $payment->payment_meta;
+	$completed_date = $payment->completed_date;
+	$user_info      = $payment->user_info;
+	$customer_id    = $payment->customer_id;
+	$amount         = $payment->total;
+	$price_id       = $payment->price_id;
+	$form_id        = $payment->form_id;
 
+	/**
+	 * Fires before completing donation.
+	 *
+	 * @since 1.0
+	 *
+	 * @param int $payment_id The ID of the payment.
+	 */
 	do_action( 'give_pre_complete_purchase', $payment_id );
 
-	if ( is_array( $payment_details ) ) {
+	// Ensure these actions only run once, ever
+	if ( empty( $completed_date ) ) {
 
-		// Increase purchase count and earnings
-		foreach ( $payment_details as $donation_index => $donation ) {
+		give_record_sale_in_log( $form_id, $payment_id, $price_id, $creation_date );
 
-			$price_id = isset( $donation['item_number']['options']['price_id'] ) ? (int) $donation['item_number']['options']['price_id'] : false;
+		/**
+		 * Fires after logging donation record.
+		 *
+		 * @since 1.0
+		 *
+		 * @param int   $form_id      The ID number of the form.
+		 * @param int   $payment_id   The ID number of the payment.
+		 * @param array $payment_meta The payment meta.
+		 */
+		do_action( 'give_complete_form_donation', $form_id, $payment_id, $payment_meta );
 
-			$quantity = isset( $donation['quantity'] ) ? $donation['quantity'] : 1;
-
-			// Increase earnings and fire actions once per quantity number
-			for ( $i = 0; $i < $quantity; $i ++ ) {
-
-				// Ensure these actions only run once, ever
-				if ( empty( $completed_date ) ) {
-
-					give_record_sale_in_log( $donation['id'], $payment_id, $price_id, $creation_date );
-					do_action( 'give_complete_donation_purchase', $donation['id'], $payment_id, $donation, $donation_index );
-
-				}
-
-			}
-
-			// Increase the earnings for this download ID
-			give_increase_earnings( $donation['id'], $donation['price'] );
-			give_increase_purchase_count( $donation['id'], $quantity );
-
-		}
-
-		// Clear the total earnings cache
-		delete_transient( 'give_earnings_total' );
-		// Clear the This Month earnings (this_monththis_month is NOT a typo)
-		delete_transient( md5( 'give_earnings_this_monththis_month' ) );
-		delete_transient( md5( 'give_earnings_todaytoday' ) );
 	}
 
+	// Increase the earnings for this form ID
+	give_increase_earnings( $form_id, $amount );
+	give_increase_purchase_count( $form_id );
 
-	// Increase the donor's purchase stats
+	// Clear the total earnings cache
+	delete_transient( 'give_earnings_total' );
+	// Clear the This Month earnings (this_monththis_month is NOT a typo)
+	delete_transient( md5( 'give_earnings_this_monththis_month' ) );
+	delete_transient( md5( 'give_earnings_todaytoday' ) );
+	
+	// Increase the donor's donation stats
 	$customer = new Give_Customer( $customer_id );
 	$customer->increase_purchase_count();
 	$customer->increase_value( $amount );
@@ -101,6 +101,14 @@ function give_complete_purchase( $payment_id, $new_status, $old_status ) {
 		// Save the completed date
 		$payment->completed_date = current_time( 'mysql' );
 		$payment->save();
+
+		/**
+		 * Fires after completing donation.
+		 *
+		 * @since 1.0
+		 *
+		 * @param int $payment_id The ID of the payment.
+		 */
 		do_action( 'give_complete_purchase', $payment_id );
 	}
 
@@ -112,11 +120,11 @@ add_action( 'give_update_payment_status', 'give_complete_purchase', 100, 3 );
 /**
  * Record payment status change
  *
- * @since 1.0
+ * @since  1.0
  *
- * @param int $payment_id the ID number of the payment
- * @param string $new_status the status of the payment, probably "publish"
- * @param string $old_status the status of the payment prior to being marked as "complete", probably "pending"
+ * @param  int    $payment_id The ID number of the payment.
+ * @param  string $new_status The status of the payment, probably "publish".
+ * @param  string $old_status The status of the payment prior to being marked as "complete", probably "pending".
  *
  * @return void
  */
@@ -127,7 +135,12 @@ function give_record_status_change( $payment_id, $new_status, $old_status ) {
 	$old_status = isset( $stati[ $old_status ] ) ? $stati[ $old_status ] : $old_status;
 	$new_status = isset( $stati[ $new_status ] ) ? $stati[ $new_status ] : $new_status;
 
-	$status_change = sprintf( __( 'Status changed from %s to %s', 'give' ), $old_status, $new_status );
+	$status_change = sprintf(
+		/* translators: 1: old status 2: new status */
+		esc_html__( 'Status changed from %1$s to %2$s.', 'give' ),
+		$old_status,
+		$new_status
+	);
 
 	give_insert_payment_note( $payment_id, $status_change );
 }
@@ -136,14 +149,18 @@ add_action( 'give_update_payment_status', 'give_record_status_change', 100, 3 );
 
 
 /**
- * Flushes the current user's purchase history transient when a payment status
- * is updated
+ * Clear User History Cache
  *
- * @since 1.0
+ * Flushes the current user's donation history transient when a payment status
+ * is updated.
  *
- * @param $payment_id
- * @param $new_status the status of the payment, probably "publish"
- * @param $old_status the status of the payment prior to being marked as "complete", probably "pending"
+ * @since  1.0
+ *
+ * @param  int    $payment_id The ID number of the payment.
+ * @param  string $new_status The status of the payment, probably "publish".
+ * @param  string $old_status The status of the payment prior to being marked as "complete", probably "pending".
+ *
+ * @return void
  */
 function give_clear_user_history_cache( $payment_id, $new_status, $old_status ) {
 
@@ -158,14 +175,15 @@ function give_clear_user_history_cache( $payment_id, $new_status, $old_status ) 
 add_action( 'give_update_payment_status', 'give_clear_user_history_cache', 10, 3 );
 
 /**
- * Updates all old payments, prior to 1.2, with new
- * meta for the total purchase amount
+ * Update Old Payments Totals
  *
- * This is so that payments can be queried by their totals
+ * Updates all old payments, prior to 1.2, with new meta for the total donation amount.
  *
- * @since 1.0
+ * It's done to query payments by their totals.
  *
- * @param array $data Arguments passed
+ * @since  1.0
+ *
+ * @param  array $data Arguments passed.
  *
  * @return void
  */
@@ -202,9 +220,12 @@ function give_update_old_payments_with_totals( $data ) {
 add_action( 'give_upgrade_payments', 'give_update_old_payments_with_totals' );
 
 /**
- * Updates week-old+ 'pending' orders to 'abandoned'
+ * Mark Abandoned Donations
  *
- * @since 1.0
+ * Updates over a week-old 'pending' donations to 'abandoned' status.
+ *
+ * @since  1.0
+ *
  * @return void
  */
 function give_mark_abandoned_donations() {
@@ -221,12 +242,23 @@ function give_mark_abandoned_donations() {
 	remove_filter( 'posts_where', 'give_filter_where_older_than_week' );
 
 	if ( $payments ) {
+        /**
+         * Filter payment gateways:  Used to set payment gateways which can be skip while transferring pending payment to abandon.
+         *
+         * @since 1.6
+         *
+         * @param array $skip_payment_gateways Array of payment gateways
+         */
+	    $skip_payment_gateways = apply_filters( 'give_mark_abandoned_donation_gateways', array( 'offline' ) );
+
 		foreach ( $payments as $payment ) {
 			$gateway = give_get_payment_gateway( $payment );
-			//Skip offline gateway payments
-			if ( $gateway == 'offline' ) {
+
+			// Skip payment gateways.
+			if ( in_array( $gateway, $skip_payment_gateways ) ) {
 				continue;
 			}
+
 			$payment->status = 'abandoned';
 			$payment->save();
 		}

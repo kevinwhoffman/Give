@@ -2,41 +2,32 @@
 /**
  * Payments
  *
- * This class is for working with payments in Give.
- *
  * @package     Give
- * @subpackage  Classes/Payment
+ * @subpackage  Classes/Give_Payment
  * @copyright   Copyright (c) 2016, WordImpress
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.5
  */
-
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-
 /**
  * Give_Payment Class
+ *
+ * This class is for working with payments in Give.
  *
  * @since 1.5
  */
 final class Give_Payment {
 
 	/**
-	 * The Payment we are working with
-	 *
-	 * @var int
-	 * @access private
-	 * @since 1.0
-	 */
-
-	/**
 	 * The Payment ID
 	 *
 	 * @since  1.5
+	 *
 	 * @var    integer
 	 */
 	public $ID = 0;
@@ -46,7 +37,9 @@ final class Give_Payment {
 	 * Identify if the payment is a new one or existing
 	 *
 	 * @since  1.5
-	 * @var boolean
+	 * @access protected
+	 *
+	 * @var    boolean
 	 */
 	protected $new = false;
 
@@ -54,7 +47,9 @@ final class Give_Payment {
 	 * The Payment number (for use with sequential payments)
 	 *
 	 * @since  1.5
-	 * @var string
+	 * @access protected
+	 *
+	 * @var    string
 	 */
 	protected $number = '';
 
@@ -62,7 +57,9 @@ final class Give_Payment {
 	 * The Gateway mode the payment was made in
 	 *
 	 * @since  1.5
-	 * @var string
+	 * @access protected
+	 *
+	 * @var    string
 	 */
 	protected $mode = 'live';
 
@@ -70,16 +67,50 @@ final class Give_Payment {
 	 * The Unique Payment Key
 	 *
 	 * @since  1.5
-	 * @var string
+	 * @access protected
+	 *
+	 * @var    string
 	 */
 	protected $key = '';
+
+	/**
+	 * The Donation Form Title
+	 *
+	 * @since  1.5
+	 * @access protected
+	 *
+	 * @var    string
+	 */
+	protected $form_title = 0;
+
+	/**
+	 * The Donation Form ID
+	 *
+	 * @since  1.5
+	 * @access protected
+	 *
+	 * @var    string
+	 */
+	protected $form_id = 0;
+
+	/**
+	 * The Donation Form Price ID
+	 *
+	 * @since  1.5
+	 * @access protected
+	 *
+	 * @var    string
+	 */
+	protected $price_id = 0;
 
 	/**
 	 * The total amount the payment is for
 	 * Includes donation amount and fees
 	 *
 	 * @since  1.5
-	 * @var float
+	 * @access protected
+	 *
+	 * @var    float
 	 */
 	protected $total = 0.00;
 
@@ -87,7 +118,9 @@ final class Give_Payment {
 	 * The Subtotal fo the payment before fees
 	 *
 	 * @since  1.5
-	 * @var float
+	 * @access protected
+	 *
+	 * @var    float
 	 */
 	protected $subtotal = 0;
 
@@ -95,7 +128,9 @@ final class Give_Payment {
 	 * Array of global fees for this payment
 	 *
 	 * @since  1.5
-	 * @var array
+	 * @access protected
+	 *
+	 * @var    array
 	 */
 	protected $fees = array();
 
@@ -103,7 +138,9 @@ final class Give_Payment {
 	 * The sum of the fee amounts
 	 *
 	 * @since  1.5
-	 * @var float
+	 * @access protected
+	 *
+	 * @var    float
 	 */
 	protected $fees_total = 0;
 
@@ -111,15 +148,20 @@ final class Give_Payment {
 	 * The date the payment was created
 	 *
 	 * @since  1.5
-	 * @var string
+	 * @access protected
+	 *
+	 * @var    string
 	 */
 	protected $date = '';
+	protected $post_date = '';
 
 	/**
 	 * The date the payment was marked as 'complete'
 	 *
 	 * @since  1.5
-	 * @var string
+	 * @access protected
+	 *
+	 * @var    string
 	 */
 	protected $completed_date = '';
 
@@ -127,7 +169,9 @@ final class Give_Payment {
 	 * The status of the payment
 	 *
 	 * @since  1.5
-	 * @var string
+	 * @access protected
+	 *
+	 * @var    string
 	 */
 	protected $status = 'pending';
 	protected $post_status = 'pending'; // Same as $status but here for backwards compat
@@ -136,7 +180,9 @@ final class Give_Payment {
 	 * When updating, the old status prior to the change
 	 *
 	 * @since  1.5
-	 * @var string
+	 * @access protected
+	 *
+	 * @var    string
 	 */
 	protected $old_status = '';
 
@@ -144,7 +190,9 @@ final class Give_Payment {
 	 * The display name of the current payment status
 	 *
 	 * @since  1.5
-	 * @var string
+	 * @access protected
+	 *
+	 * @var    string
 	 */
 	protected $status_nicename = '';
 
@@ -152,7 +200,9 @@ final class Give_Payment {
 	 * The customer ID that made the payment
 	 *
 	 * @since  1.5
-	 * @var integer
+	 * @access protected
+	 *
+	 * @var    integer
 	 */
 	protected $customer_id = null;
 
@@ -160,7 +210,9 @@ final class Give_Payment {
 	 * The User ID (if logged in) that made the payment
 	 *
 	 * @since  1.5
-	 * @var integer
+	 * @access protected
+	 *
+	 * @var    integer
 	 */
 	protected $user_id = 0;
 
@@ -168,7 +220,9 @@ final class Give_Payment {
 	 * The first name of the payee
 	 *
 	 * @since  1.5
-	 * @var string
+	 * @access protected
+	 *
+	 * @var    string
 	 */
 	protected $first_name = '';
 
@@ -176,7 +230,9 @@ final class Give_Payment {
 	 * The last name of the payee
 	 *
 	 * @since  1.5
-	 * @var string
+	 * @access protected
+	 *
+	 * @var    string
 	 */
 	protected $last_name = '';
 
@@ -184,7 +240,9 @@ final class Give_Payment {
 	 * The email used for the payment
 	 *
 	 * @since  1.5
-	 * @var string
+	 * @access protected
+	 *
+	 * @var    string
 	 */
 	protected $email = '';
 
@@ -192,7 +250,9 @@ final class Give_Payment {
 	 * Legacy (not to be accessed) array of user information
 	 *
 	 * @since  1.5
-	 * @var array
+	 * @access private
+	 *
+	 * @var    array
 	 */
 	private $user_info = array();
 
@@ -200,7 +260,9 @@ final class Give_Payment {
 	 * Legacy (not to be accessed) payment meta array
 	 *
 	 * @since  1.5
-	 * @var array
+	 * @access private
+	 *
+	 * @var    array
 	 */
 	private $payment_meta = array();
 
@@ -208,7 +270,9 @@ final class Give_Payment {
 	 * The physical address used for the payment if provided
 	 *
 	 * @since  1.5
-	 * @var array
+	 * @access protected
+	 *
+	 * @var    array
 	 */
 	protected $address = array();
 
@@ -216,23 +280,19 @@ final class Give_Payment {
 	 * The transaction ID returned by the gateway
 	 *
 	 * @since  1.5
-	 * @var string
+	 * @access protected
+	 *
+	 * @var    string
 	 */
 	protected $transaction_id = '';
-
-	/**
-	 * Array of donations for this payment
-	 *
-	 * @since  1.5
-	 * @var array
-	 */
-	protected $donations = array();
 
 	/**
 	 * IP Address payment was made from
 	 *
 	 * @since  1.5
-	 * @var string
+	 * @access protected
+	 *
+	 * @var    string
 	 */
 	protected $ip = '';
 
@@ -240,7 +300,9 @@ final class Give_Payment {
 	 * The gateway used to process the payment
 	 *
 	 * @since  1.5
-	 * @var string
+	 * @access protected
+	 *
+	 * @var    string
 	 */
 	protected $gateway = '';
 
@@ -248,24 +310,20 @@ final class Give_Payment {
 	 * The the payment was made with
 	 *
 	 * @since  1.5
-	 * @var string
+	 * @access protected
+	 *
+	 * @var    string
 	 */
 	protected $currency = '';
-
-	/**
-	 * The donation details array
-	 *
-	 * @since  1.5
-	 * @var array
-	 */
-	protected $payment_details = array();
 
 	/**
 	 * Array of items that have changed since the last save() was run
 	 * This is for internal use, to allow fewer update_payment_meta calls to be run
 	 *
 	 * @since  1.5
-	 * @var array
+	 * @access private
+	 *
+	 * @var    array
 	 */
 	private $pending;
 
@@ -273,16 +331,19 @@ final class Give_Payment {
 	 * The parent payment (if applicable)
 	 *
 	 * @since  1.5
-	 * @var integer
+	 * @access protected
+	 *
+	 * @var    integer
 	 */
 	protected $parent_payment = 0;
 
 	/**
 	 * Setup the Give Payments class
 	 *
-	 * @since 1.0
+	 * @since  1.5
+	 * @access public
 	 *
-	 * @param int $payment_id A given payment
+	 * @param  int   $payment_id A given payment
 	 *
 	 * @return mixed void|false
 	 */
@@ -299,6 +360,7 @@ final class Give_Payment {
 	 * Magic GET function
 	 *
 	 * @since  1.5
+	 * @access public
 	 *
 	 * @param  string $key The property
 	 *
@@ -325,12 +387,13 @@ final class Give_Payment {
 	 * Sets up the pending array for the save method
 	 *
 	 * @since  1.5
+	 * @access public
 	 *
-	 * @param string $key The property name
-	 * @param mixed $value The value of the property
+	 * @param  string $key The property name
+	 * @param  mixed $value The value of the property
 	 */
 	public function __set( $key, $value ) {
-		$ignore = array( 'donations', 'payment_details', 'fees', '_ID' );
+		$ignore = array( '_ID' );
 
 		if ( $key === 'status' ) {
 			$this->old_status = $this->status;
@@ -349,6 +412,7 @@ final class Give_Payment {
 	 * Magic ISSET function, which allows empty checks on protected elements
 	 *
 	 * @since  1.5
+	 * @access public
 	 *
 	 * @param  string $name The attribute to get
 	 *
@@ -366,6 +430,7 @@ final class Give_Payment {
 	 * Setup payment properties
 	 *
 	 * @since  1.5
+	 * @access private
 	 *
 	 * @param  int $payment_id The payment ID
 	 *
@@ -388,7 +453,16 @@ final class Give_Payment {
 			return false;
 		}
 
-		// Allow extensions to perform actions before the payment is loaded
+		/**
+		 * Fires before payment setup.
+		 *
+		 * Allow extensions to perform actions before the payment is loaded.
+		 *
+		 * @since 1.5
+		 *
+		 * @param Give_Payment $this       Payment object.
+		 * @param int          $payment_id The ID of the payment.
+		 */
 		do_action( 'give_pre_setup_payment', $this, $payment_id );
 
 		// Primary Identifier
@@ -402,6 +476,7 @@ final class Give_Payment {
 
 		// Status and Dates
 		$this->date           = $payment->post_date;
+		$this->post_date      = $payment->post_date;
 		$this->completed_date = $this->setup_completed_date();
 		$this->status         = $payment->post_status;
 		$this->post_status    = $this->status;
@@ -412,9 +487,7 @@ final class Give_Payment {
 		$this->status_nicename = array_key_exists( $this->status, $all_payment_statuses ) ? $all_payment_statuses[ $this->status ] : ucfirst( $this->status );
 
 		// Items
-		$this->fees            = $this->setup_fees();
-		$this->payment_details = $this->setup_payment_details();
-		$this->donations       = $this->setup_donations();
+		$this->fees = $this->setup_fees();
 
 		// Currency Based
 		$this->total      = $this->setup_total();
@@ -437,26 +510,56 @@ final class Give_Payment {
 		$this->last_name   = $this->user_info['last_name'];
 
 		// Other Identifiers
-		$this->key    = $this->setup_payment_key();
-		$this->number = $this->setup_payment_number();
+		$this->form_title = $this->setup_form_title();
+		$this->form_id    = $this->setup_form_id();
+		$this->price_id   = $this->setup_price_id();
+		$this->key        = $this->setup_payment_key();
+		$this->number     = $this->setup_payment_number();
 
-		// Allow extensions to add items to this object via hook
+		/**
+		 * Fires after payment setup.
+		 *
+		 * Allow extensions to add items to this object via hook.
+		 *
+		 * @since 1.5
+		 *
+		 * @param Give_Payment $this       Payment object.
+		 * @param int          $payment_id The ID of the payment.
+		 */
 		do_action( 'give_setup_payment', $this, $payment_id );
 
 		return true;
 	}
 
+    /**
+     * Payment class object is storing various meta value in object parameter.
+     * So if user is updating payment meta but not updating payment object, then payment meta values will not reflect/changes on payment meta automatically
+     * and you can still access payment meta old value in any old payment object ( previously created ) which can cause to show or save wrong payment data.
+     * To prevent that user can use this function after updating any payment meta value ( in bulk or single update ).
+     *  
+     * @since  1.6
+     * @access public
+     * 
+     * @param  int $payment_id Payment ID.
+     * 
+     * @return void
+     */
+    public function update_payment_setup( $payment_id ){
+        $this->setup_payment( $payment_id );
+    }
+
 	/**
 	 * Create the base of a payment.
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return int|bool False on failure, the payment ID on success.
 	 */
 	private function insert_payment() {
 
 		// Construct the payment title
 		$payment_title = '';
-
 		if ( ! empty( $this->first_name ) && ! empty( $this->last_name ) ) {
 			$payment_title = $this->first_name . ' ' . $this->last_name;
 		} else if ( ! empty( $this->first_name ) && empty( $this->last_name ) ) {
@@ -465,6 +568,7 @@ final class Give_Payment {
 			$payment_title = $this->email;
 		}
 
+		//Set Key
 		if ( empty( $this->key ) ) {
 
 			$auth_key             = defined( 'AUTH_KEY' ) ? AUTH_KEY : '';
@@ -472,6 +576,7 @@ final class Give_Payment {
 			$this->pending['key'] = $this->key;
 		}
 
+		//Set IP
 		if ( empty( $this->ip ) ) {
 
 			$this->ip            = give_get_ip();
@@ -480,22 +585,23 @@ final class Give_Payment {
 		}
 
 		$payment_data = array(
-			'price'           => $this->total,
-			'date'            => $this->date,
-			'user_email'      => $this->email,
-			'purchase_key'    => $this->key,
-			'currency'        => $this->currency,
-			'donations'       => $this->donations,
-			'user_info'       => array(
+			'price'        => $this->total,
+			'date'         => $this->date,
+			'user_email'   => $this->email,
+			'purchase_key' => $this->key,
+			'form_title'   => $this->form_title,
+			'form_id'      => $this->form_id,
+			'price_id'     => $this->price_id,
+			'currency'     => $this->currency,
+			'user_info'    => array(
 				'id'         => $this->user_id,
 				'email'      => $this->email,
 				'first_name' => $this->first_name,
 				'last_name'  => $this->last_name,
 				'address'    => $this->address,
 			),
-			'payment_details' => $this->payment_details,
-			'status'          => $this->status,
-			'fees'            => $this->fees,
+			'status'       => $this->status,
+			'fees'         => $this->fees,
 		);
 
 		$args = apply_filters( 'give_insert_payment_args', array(
@@ -558,15 +664,19 @@ final class Give_Payment {
 	}
 
 	/**
-	 * Save Payment
+	 * Save
 	 *
-	 * @description: Once items have been set, an update is needed to save them to the database.
+	 * Once items have been set, an update is needed to save them to the database.
+	 *
+     * @access public
 	 *
 	 * @return bool  True of the save occurred, false if it failed or wasn't needed
 	 */
 	public function save() {
+
 		$saved = false;
 
+		//Must have an ID 
 		if ( empty( $this->ID ) ) {
 
 			$payment_id = $this->insert_payment();
@@ -579,6 +689,7 @@ final class Give_Payment {
 
 		}
 
+		//Set ID if not matching
 		if ( $this->ID !== $this->_ID ) {
 			$this->ID = $this->_ID;
 		}
@@ -592,29 +703,34 @@ final class Give_Payment {
 			foreach ( $this->pending as $key => $value ) {
 
 				switch ( $key ) {
+
 					case 'donations':
 						// Update totals for pending donations
 						foreach ( $this->pending[ $key ] as $item ) {
 
+							$quantity = isset( $item['quantity'] ) ? $item['quantity'] : 1;
+							$price_id = isset( $item['price_id'] ) ? $item['price_id'] : 0;
+
 							switch ( $item['action'] ) {
 
 								case 'add':
+
 									$price = $item['price'];
 
-									if ( 'publish' === $this->status || 'complete' === $this->status || 'revoked' === $this->status ) {
+									if ( 'publish' === $this->status || 'complete' === $this->status ) {
 
 										// Add sales logs
 										$log_date = date_i18n( 'Y-m-d G:i:s', current_time( 'timestamp' ) );
-										$price_id = isset( $item['options']['price_id'] ) ? $item['options']['price_id'] : 0;
 
 										$y = 0;
-										while ( $y < $item['quantity'] ) {
+										while ( $y < $quantity ) {
+
 											give_record_sale_in_log( $item['id'], $this->ID, $price_id, $log_date );
 											$y ++;
 										}
 
 										$form = new Give_Donate_Form( $item['id'] );
-										$form->increase_sales( $item['quantity'] );
+										$form->increase_sales( $quantity );
 										$form->increase_earnings( $price );
 
 										$total_increase += $price;
@@ -625,7 +741,7 @@ final class Give_Payment {
 									$log_args = array(
 										'post_type'   => 'give_log',
 										'post_parent' => $item['id'],
-										'numberposts' => $item['quantity'],
+										'numberposts' => $quantity,
 										'meta_query'  => array(
 											array(
 												'key'     => '_give_log_payment_id',
@@ -634,7 +750,7 @@ final class Give_Payment {
 											),
 											array(
 												'key'     => '_give_log_price_id',
-												'value'   => $item['price_id'],
+												'value'   => $price_id,
 												'compare' => '='
 											)
 										)
@@ -645,9 +761,9 @@ final class Give_Payment {
 										wp_delete_post( $log->ID, true );
 									}
 
-									if ( 'publish' === $this->status || 'complete' === $this->status || 'revoked' === $this->status ) {
+									if ( 'publish' === $this->status || 'complete' === $this->status ) {
 										$form = new Give_Donate_Form( $item['id'] );
-										$form->decrease_sales( $item['quantity'] );
+										$form->decrease_sales( $quantity );
 										$form->decrease_earnings( $item['amount'] );
 
 										$total_decrease += $item['amount'];
@@ -661,7 +777,7 @@ final class Give_Payment {
 
 					case 'fees':
 
-						if ( 'publish' !== $this->status && 'complete' !== $this->status && 'revoked' !== $this->status ) {
+						if ( 'publish' !== $this->status && 'complete' !== $this->status ) {
 							break;
 						}
 
@@ -715,6 +831,18 @@ final class Give_Payment {
 						$this->update_meta( '_give_payment_user_id', $this->user_id );
 						break;
 
+					case 'form_title':
+						$this->update_meta( '_give_payment_form_title', $this->form_title );
+						break;
+
+					case 'form_id':
+						$this->update_meta( '_give_payment_form_id', $this->form_id );
+						break;
+
+					case 'price_id':
+						$this->update_meta( '_give_payment_price_id', $this->price_id );
+						break;
+
 					case 'first_name':
 						$this->user_info['first_name'] = $this->first_name;
 						break;
@@ -763,6 +891,13 @@ final class Give_Payment {
 						break;
 
 					default:
+						/**
+						 * Fires while saving payment.
+						 *
+						 * @since 1.5
+						 *
+						 * @param Give_Payment $this Payment object.
+						 */
 						do_action( 'give_payment_save', $this, $key );
 						break;
 				}
@@ -776,13 +911,13 @@ final class Give_Payment {
 				if ( $total_change < 0 ) {
 
 					$total_change = - ( $total_change );
-					// Decrease the customer's purchase stats
+					// Decrease the customer's donation stats
 					$customer->decrease_value( $total_change );
 					give_decrease_total_earnings( $total_change );
 
 				} else if ( $total_change > 0 ) {
 
-					// Increase the customer's purchase stats
+					// Increase the customer's donation stats
 					$customer->increase_value( $total_change );
 					give_increase_total_earnings( $total_change );
 
@@ -792,14 +927,13 @@ final class Give_Payment {
 
 			$this->update_meta( '_give_payment_total', $this->total );
 
-			$this->donations = array_values( $this->donations );
-
 			$new_meta = array(
-				'donations'       => $this->donations,
-				'payment_details' => $this->payment_details,
-				'fees'            => $this->fees,
-				'currency'        => $this->currency,
-				'user_info'       => $this->user_info,
+				'form_title' => $this->form_title,
+				'form_id'    => $this->form_id,
+				'price_id'   => $this->price_id,
+				'fees'       => $this->fees,
+				'currency'   => $this->currency,
+				'user_info'  => $this->user_info,
 			);
 
 			$meta        = $this->get_meta();
@@ -827,13 +961,14 @@ final class Give_Payment {
 	/**
 	 * Add a donation to a given payment
 	 *
-	 * @since 1.5
+	 * @since  1.5
+     * @access public
 	 *
-	 * @param int $form_id The donation form to add
-	 * @param array $args Other arguments to pass to the function
-	 * @param array $options List of donation options
+	 * @param  int   $form_id The donation form to add
+	 * @param  array $args    Other arguments to pass to the function
+	 * @param  array $options List of donation options
 	 *
-	 * @return bool True when successful, false otherwise
+	 * @return bool           True when successful, false otherwise
 	 */
 	public function add_donation( $form_id = 0, $args = array(), $options = array() ) {
 
@@ -846,82 +981,74 @@ final class Give_Payment {
 
 		// Set some defaults
 		$defaults = array(
-			'quantity'   => 1,
-			'price_id'   => false,
-			'item_price' => false,
-			'fees'       => array(),
+			'price'    => false,
+			'price_id' => false,
+			'fees'     => array(),
 		);
 
 		$args = wp_parse_args( apply_filters( 'give_payment_add_donation_args', $args, $donation->ID ), $defaults );
 
 		// Allow overriding the price
-		if ( false !== $args['item_price'] ) {
-			$item_price = $args['item_price'];
+		if ( false !== $args['price'] ) {
+			$item_price = $args['price'];
 		} else {
+
 			// Deal with variable pricing
 			if ( give_has_variable_prices( $donation->ID ) ) {
-				$prices = get_post_meta( $donation->ID, 'give_variable_prices', true );
-
-				if ( $args['price_id'] && array_key_exists( $args['price_id'], (array) $prices ) ) {
-					$item_price = $prices[ $args['price_id'] ]['amount'];
-				} else {
+				$prices     = maybe_unserialize( get_post_meta( $form_id, '_give_donation_levels', true ) );
+				$item_price = '';
+				//Loop through prices
+				foreach ( $prices as $price ) {
+					//Find a match between price_id and level_id
+					//First verify array keys exists THEN make the match
+					if ( ( isset( $args['price_id'] ) && isset( $price['_give_id']['level_id'] ) )
+					     && $args['price_id'] == $price['_give_id']['level_id']
+					) {
+						$item_price = $price['_give_amount'];
+					}
+				}
+				//Fallback to the lowest price point
+				if ( $item_price == '' ) {
 					$item_price       = give_get_lowest_price_option( $donation->ID );
 					$args['price_id'] = give_get_lowest_price_id( $donation->ID );
 				}
 			} else {
+				//Simple form price
 				$item_price = give_get_form_price( $donation->ID );
 			}
+
 		}
 
 		// Sanitizing the price here so we don't have a dozen calls later
 		$item_price = give_sanitize_amount( $item_price );
-		$quantity   = isset($args['quantity']) ? absint( $args['quantity'] ) : 1;
-		$amount     = round( $item_price, give_currency_decimal_filter() );
+		$total      = round( $item_price, give_currency_decimal_filter() );
 
-		// Setup the donations meta item
-		$new_donation = array(
-			'id' => $donation->ID,
-			'quantity' => $quantity,
-		);
-
-		$default_options = array(
-			'quantity' => $quantity,
-		);
-
+		//Add Options
+		$default_options = array();
 		if ( false !== $args['price_id'] ) {
 			$default_options['price_id'] = (int) $args['price_id'];
 		}
-
-		$options                 = wp_parse_args( $options, $default_options );
-		$new_donation['options'] = $options;
-
-		$this->donations[] = $new_donation;
-		$subtotal          = $amount;
-		$total             = $subtotal;
+		$options = wp_parse_args( $options, $default_options );
 
 		// Do not allow totals to go negative
 		if ( $total < 0 ) {
 			$total = 0;
 		}
 
-		$this->payment_details[] = array(
-			'name'       => $donation->post_title,
-			'id'         => $donation->ID,
-			'quantity'   => $quantity,
-			'options'    => $options,
-			'item_price' => round( $item_price, give_currency_decimal_filter() ),
-			'subtotal'   => round( $subtotal, give_currency_decimal_filter() ),
-			'fees'       => $args['fees'],
-			'price'      => round( $total, give_currency_decimal_filter() ),
+		$donation = array(
+			'name'     => $donation->post_title,
+			'id'       => $donation->ID,
+			'price'    => round( $total, give_currency_decimal_filter() ),
+			'subtotal' => round( $total, give_currency_decimal_filter() ),
+			'fees'     => $args['fees'],
+			'price_id' => $args['price_id'],
+			'action'   => 'add',
+			'options'  => $options
 		);
 
-		$added_donation           = end( $this->payment_details );
-		$added_donation['action'] = 'add';
+		$this->pending['donations'][] = $donation;
 
-		$this->pending['donations'][] = $added_donation;
-		reset( $this->payment_details );
-
-		$this->increase_subtotal( $subtotal );
+		$this->increase_subtotal( $total );
 
 		return true;
 
@@ -931,152 +1058,40 @@ final class Give_Payment {
 	 * Remove a donation from the payment
 	 *
 	 * @since  1.5
+     * @access public
 	 *
-	 * @param  int $donation_id The donation form ID to remove
-	 * @param  array $args Arguments to pass to identify (quantity, amount, price_id)
+	 * @param  int   $form_id The form ID to remove
+	 * @param  array $args    Arguments to pass to identify (quantity, amount, price_id)
 	 *
-	 * @return bool               If the item was removed or not
+	 * @return bool           If the item was removed or not
 	 */
-	public function remove_donation( $donation_id, $args = array() ) {
+	public function remove_donation( $form_id, $args = array() ) {
 
 		// Set some defaults
 		$defaults = array(
-			'quantity'      => 1,
-			'item_price'    => false,
-			'price_id'      => false,
-			'payment_index' => false,
+			'quantity' => 1,
+			'price'    => false,
+			'price_id' => false,
 		);
 		$args     = wp_parse_args( $args, $defaults );
 
-		$donation = new Give_Donate_Form( $donation_id );
+		$form = new Give_Donate_Form( $form_id );
 
-		// Bail if this post isn't a donation form cpt
-		if ( ! $donation || $donation->post_type !== 'give_forms' ) {
+		// Bail if this post isn't a valid give donation form
+		if ( ! $form || $form->post_type !== 'give_forms' ) {
 			return false;
 		}
 
-		foreach ( $this->donations as $key => $item ) {
-
-			if ( $donation_id != $item['id'] ) {
-				continue;
-			}
-
-			if ( false !== $args['price_id'] ) {
-
-				if ( isset( $item['options']['price_id'] ) && $args['price_id'] != $item['options']['price_id'] ) {
-					continue;
-				}
-
-			} elseif ( false !== $args['payment_index'] ) {
-
-				$payment_index = absint( $args['payment_index'] );
-				$donation_item = ! empty( $this->payment_details[ $payment_index ] ) ? $this->payment_details[ $payment_index ] : false;
-
-				if ( ! empty( $donation_item ) ) {
-
-					// If the donation index item isn't the same form ID, don't remove it
-					if ( $donation_item['id'] != $item['id'] ) {
-						continue;
-					}
-
-					// If this item has a price ID, make sure it matches the cart indexed item's price ID before removing
-					if ( isset( $item['options']['price_id'] ) && $item['options']['price_id'] != $donation_item['options']['price_id'] ) {
-						continue;
-					}
-
-				}
-
-			}
-
-			$item_quantity = $this->donations[ $key ]['quantity'];
-
-			if ( $item_quantity > $args['quantity'] ) {
-
-				$this->donations[ $key ]['quantity'] -= $args['quantity'];
-				break;
-
-			} else {
-
-				unset( $this->donations[ $key ] );
-				break;
-
-			}
-		}
-
-		$found_donation_key = false;
-
-		if ( false === $args['payment_index'] ) {
-
-			foreach ( $this->payment_details as $donation_key => $item ) {
-
-				if ( $donation_id != $item['id'] ) {
-					continue;
-				}
-
-				if ( false !== $args['price_id'] ) {
-					if ( isset( $item['options']['price_id'] ) && $args['price_id'] != $item['options']['price_id'] ) {
-						continue;
-					}
-				}
-
-				if ( false !== $args['item_price'] ) {
-					if ( isset( $item['item_price'] ) && $args['item_price'] != $item['item_price'] ) {
-						continue;
-					}
-				}
-
-				$found_donation_key = $donation_key;
-				break;
-			}
-
-		} else {
-
-			$payment_index = absint( $args['payment_index'] );
-
-			if ( ! array_key_exists( $payment_index, $this->payment_details ) ) {
-				return false; // Invalid cart index passed.
-			}
-
-			if ( $this->payment_details[ $payment_index ]['id'] !== $donation_id ) {
-				return false; // We still need the proper Download ID to be sure.
-			}
-
-			$found_donation_key = $payment_index;
-		}
-
-		$orig_quantity = $this->payment_details[ $found_donation_key ]['quantity'];
-
-		if ( $orig_quantity > $args['quantity'] ) {
-
-			$this->payment_details[ $found_donation_key ]['quantity'] -= $args['quantity'];
-
-			$item_price = $this->payment_details[ $found_donation_key ]['item_price'];
-
-			// The total reduction equals the number removed * the item_price
-			$total_reduced = round( $item_price * $args['quantity'], give_currency_decimal_filter() );
-
-			$new_quantity = $this->payment_details[ $found_donation_key ]['quantity'];
-			$new_subtotal = $new_quantity * $item_price;
-
-			$this->payment_details[ $found_donation_key ]['subtotal'] = $new_subtotal;
-			$this->payment_details[ $found_donation_key ]['price']    = $new_subtotal;
-
-		} else {
-
-			$total_reduced = $this->payment_details[ $found_donation_key ]['item_price'];
-			unset( $this->payment_details[ $found_donation_key ] );
-
-		}
-
 		$pending_args             = $args;
-		$pending_args['id']       = $donation_id;
-		$pending_args['amount']   = $total_reduced;
-		$pending_args['price_id'] = false !== $args['price_id'] ? $args['price_id'] : false;
+		$pending_args['id']       = $form_id;
+		$pending_args['amount']   = $this->total;
+		$pending_args['price_id'] = false !== $args['price_id'] ? (int) $args['price_id'] : false;
+		$pending_args['quantity'] = $args['quantity'];
 		$pending_args['action']   = 'remove';
 
 		$this->pending['donations'][] = $pending_args;
 
-		$this->decrease_subtotal( $total_reduced );
+		$this->decrease_subtotal( $this->total );
 
 		return true;
 	}
@@ -1085,11 +1100,12 @@ final class Give_Payment {
 	 * Add a fee to a given payment
 	 *
 	 * @since  1.5
+     * @access public
 	 *
-	 * @param  array $args Array of arguments for the fee to add
-	 * @param bool $global
+	 * @param  array $args   Array of arguments for the fee to add
+	 * @param  bool  $global
 	 *
-	 * @return bool If the fee was added
+	 * @return bool          If the fee was added
 	 */
 	public function add_fee( $args, $global = true ) {
 
@@ -1119,6 +1135,7 @@ final class Give_Payment {
 	 * Remove a fee from the payment
 	 *
 	 * @since  1.5
+     * @access public
 	 *
 	 * @param  int $key The array key index to remove
 	 *
@@ -1138,12 +1155,14 @@ final class Give_Payment {
 	 * Remove a fee by the defined attributed
 	 *
 	 * @since  1.5
+     * @access public
 	 *
-	 * @param  string $key The key to remove by
-	 * @param  int|string $value The value to search for
-	 * @param  boolean $global False - removes the first value it fines, True - removes all matches
+	 * @param  string     $key    The key to remove by
+	 * @param  int|string $value  The value to search for
+	 * @param  boolean    $global False - removes the first value it fines,
+	 *                            True - removes all matches.
 	 *
-	 * @return boolean             If the item is removed
+	 * @return boolean            If the item is removed
 	 */
 	public function remove_fee_by( $key, $value, $global = false ) {
 
@@ -1206,6 +1225,7 @@ final class Give_Payment {
 	 * Get the fees, filterable by type
 	 *
 	 * @since  1.5
+     * @access public
 	 *
 	 * @param  string $type All, item, fee
 	 *
@@ -1234,9 +1254,10 @@ final class Give_Payment {
 	/**
 	 * Add a note to a payment
 	 *
-	 * @since 1.0
+	 * @since  1.5
+     * @access public
 	 *
-	 * @param string $note The note to add
+	 * @param  string $note The note to add
 	 *
 	 * @return void
 	 */
@@ -1253,6 +1274,7 @@ final class Give_Payment {
 	 * Increase the payment's subtotal
 	 *
 	 * @since  1.5
+     * @access private
 	 *
 	 * @param  float $amount The amount to increase the payment subtotal by
 	 *
@@ -1269,6 +1291,7 @@ final class Give_Payment {
 	 * Decrease the payment's subtotal
 	 *
 	 * @since  1.5
+     * @access private
 	 *
 	 * @param  float $amount The amount to decrease the payment subtotal by
 	 *
@@ -1289,6 +1312,7 @@ final class Give_Payment {
 	 * Increase the payment's subtotal
 	 *
 	 * @since  1.5
+     * @access private
 	 *
 	 * @param  float $amount The amount to increase the payment subtotal by
 	 *
@@ -1305,6 +1329,7 @@ final class Give_Payment {
 	 * Decrease the payment's subtotal
 	 *
 	 * @since  1.5
+     * @access private
 	 *
 	 * @param  float $amount The amount to decrease the payment subtotal by
 	 *
@@ -1324,7 +1349,9 @@ final class Give_Payment {
 	/**
 	 * Set or update the total for a payment
 	 *
-	 * @since 1.0
+	 * @since  1.5
+     * @access private
+	 *
 	 * @return void
 	 */
 	private function recalculate_total() {
@@ -1334,14 +1361,16 @@ final class Give_Payment {
 	/**
 	 * Set the payment status and run any status specific changes necessary
 	 *
-	 * @since 1.0
+	 * @since  1.5
+     * @access public
 	 *
-	 * @param  string $status The status to set the payment to
+	 * @param  string $status  The status to set the payment to
 	 *
-	 * @return bool Returns if the status was successfully updated
+	 * @return bool   $updated Returns if the status was successfully updated
 	 */
 	public function update_status( $status = false ) {
 
+		//standardize the 'complete(d)' status
 		if ( $status == 'completed' || $status == 'complete' ) {
 			$status = 'publish';
 		}
@@ -1356,8 +1385,18 @@ final class Give_Payment {
 
 		$updated = false;
 
+
 		if ( $do_change ) {
 
+			/**
+			 * Fires before changing payment status.
+			 *
+			 * @since 1.5
+			 *
+			 * @param int    $payment_id Payments ID.
+			 * @param string $status     The new status.
+			 * @param string $old_status The old status.
+			 */
 			do_action( 'give_before_payment_status_change', $this->ID, $status, $old_status );
 
 			$update_fields = array(
@@ -1382,8 +1421,23 @@ final class Give_Payment {
 				case 'pending':
 					$this->process_pending();
 					break;
+                case 'cancelled':
+                    $this->process_cancelled();
+                    break;
+                case 'revoked':
+                    $this->process_revoked();
+                    break;
 			}
 
+			/**
+			 * Fires after changing payment status.
+			 *
+			 * @since 1.5
+			 *
+			 * @param int    $payment_id Payment ID.
+			 * @param string $status     The new status.
+			 * @param string $old_status The old status.
+			 */
 			do_action( 'give_update_payment_status', $this->ID, $status, $old_status );
 
 		}
@@ -1396,6 +1450,8 @@ final class Give_Payment {
 	 * Change the status of the payment to refunded, and run the necessary changes
 	 *
 	 * @since  1.5
+     * @access public
+	 *
 	 * @return void
 	 */
 	public function refund() {
@@ -1410,9 +1466,10 @@ final class Give_Payment {
 	 * Get a post meta item for the payment
 	 *
 	 * @since  1.5
+     * @access public
 	 *
-	 * @param  string $meta_key The Meta Key
-	 * @param  boolean $single Return single item or array
+	 * @param  string  $meta_key The Meta Key
+	 * @param  boolean $single   Return single item or array
 	 *
 	 * @return mixed             The value from the post meta
 	 */
@@ -1426,6 +1483,10 @@ final class Give_Payment {
 				$meta['key'] = $this->setup_payment_key();
 			}
 
+			if ( empty( $meta['form_title'] ) ) {
+				$meta['form_title'] = $this->setup_form_title();
+			}
+
 			if ( empty( $meta['email'] ) ) {
 				$meta['email'] = $this->setup_email();
 			}
@@ -1435,7 +1496,7 @@ final class Give_Payment {
 			}
 		}
 
-		$meta = apply_filters( 'give_get_payment_meta_' . $meta_key, $meta, $this->ID );
+		$meta = apply_filters( "give_get_payment_meta_{$meta_key}", $meta, $this->ID );
 
 		return apply_filters( 'give_get_payment_meta', $meta, $this->ID, $meta_key );
 	}
@@ -1444,8 +1505,9 @@ final class Give_Payment {
 	 * Update the post meta
 	 *
 	 * @since  1.5
+     * @access public
 	 *
-	 * @param  string $meta_key The meta key to update
+	 * @param  string $meta_key   The meta key to update
 	 * @param  string $meta_value The meta value
 	 * @param  string $prev_value Previous meta value
 	 *
@@ -1466,7 +1528,7 @@ final class Give_Payment {
 
 		} else if ( $meta_key == 'email' || $meta_key == '_give_payment_user_email' ) {
 
-			$meta_value = apply_filters( 'give_give_update_payment_meta_' . $meta_key, $meta_value, $this->ID );
+			$meta_value = apply_filters( "give_give_update_payment_meta_{$meta_key}", $meta_value, $this->ID );
 			update_post_meta( $this->ID, '_give_payment_user_email', $meta_value );
 
 			$current_meta                       = $this->get_meta();
@@ -1477,25 +1539,24 @@ final class Give_Payment {
 
 		}
 
-		$meta_value = apply_filters( 'give_update_payment_meta_' . $meta_key, $meta_value, $this->ID );
+		$meta_value = apply_filters( "give_update_payment_meta_{$meta_key}", $meta_value, $this->ID );
 
 		return update_post_meta( $this->ID, $meta_key, $meta_value, $prev_value );
 	}
 
 	/**
-	 * Process Refund
-	 *
-	 * @description: When a payment is set to a status of 'refunded' process the necessary actions to reduce stats
+	 * When a payment is set to a status of 'refunded' process the necessary actions to reduce stats
 	 *
 	 * @since  1.5
 	 * @access private
+	 *
 	 * @return void
 	 */
 	private function process_refund() {
 		$process_refund = true;
 
 		// If the payment was not in publish or revoked status, don't decrement stats as they were never incremented
-		if ( ( 'publish' != $this->old_status && 'revoked' != $this->old_status ) || 'refunded' != $this->status ) {
+		if ( 'publish' != $this->old_status || 'refunded' != $this->status ) {
 			$process_refund = false;
 		}
 
@@ -1506,6 +1567,13 @@ final class Give_Payment {
 			return;
 		}
 
+		/**
+		 * Fires before refunding payment.
+		 *
+		 * @since 1.5
+		 *
+		 * @param Give_Payment $this Payment object.
+		 */
 		do_action( 'give_pre_refund_payment', $this );
 
 		$decrease_store_earnings = apply_filters( 'give_decrease_store_earnings_on_refund', true, $this );
@@ -1518,6 +1586,13 @@ final class Give_Payment {
 		// Clear the This Month earnings (this_monththis_month is NOT a typo)
 		delete_transient( md5( 'give_earnings_this_monththis_month' ) );
 
+		/**
+		 * Fires after refunding payment.
+		 *
+		 * @since 1.5
+		 *
+		 * @param Give_Payment $this Payment object.
+		 */
 		do_action( 'give_post_refund_payment', $this );
 	}
 
@@ -1525,28 +1600,27 @@ final class Give_Payment {
 	 * Process when a payment is set to failed
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return void
 	 */
 	private function process_failure() {
 
-
-		//@TODO: Reduce earnings here if payment was previously completed; see maybe_alter_stats method
-
 	}
 
 	/**
-	 * Process Pending
-	 *
-	 * @description: Process when a payment moves to pending
+	 * Process when a payment moves to pending
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return void
 	 */
 	private function process_pending() {
 		$process_pending = true;
 
 		// If the payment was not in publish or revoked status, don't decrement stats as they were never incremented
-		if ( ( 'publish' != $this->old_status && 'revoked' != $this->old_status ) || 'pending' != $this->status ) {
+		if ( 'publish' != $this->old_status || 'pending' != $this->status ) {
 			$process_pending = false;
 		}
 
@@ -1571,14 +1645,87 @@ final class Give_Payment {
 		delete_transient( md5( 'give_earnings_this_monththis_month' ) );
 	}
 
+    /**
+     * Process when a payment moves to cancelled
+     *
+     * @since  1.5
+	 * @access private
+	 *
+     * @return void
+     */
+    private function process_cancelled() {
+        $process_cancelled = true;
+
+        // If the payment was not in publish or revoked status, don't decrement stats as they were never incremented
+        if ( 'publish' != $this->old_status || 'cancelled' != $this->status ) {
+            $process_cancelled = false;
+        }
+
+        // Allow extensions to filter for their own payment types, Example: Recurring Payments
+        $process_cancelled = apply_filters( 'give_should_process_cancelled', $process_cancelled, $this );
+
+        if ( false === $process_cancelled ) {
+            return;
+        }
+
+        $decrease_store_earnings = apply_filters( 'give_decrease_store_earnings_on_cancelled', true, $this );
+        $decrease_customer_value = apply_filters( 'give_decrease_customer_value_on_cancelled', true, $this );
+        $decrease_purchase_count = apply_filters( 'give_decrease_customer_purchase_count_on_cancelled', true, $this );
+
+        $this->maybe_alter_stats( $decrease_store_earnings, $decrease_customer_value, $decrease_purchase_count );
+        $this->delete_sales_logs();
+
+        $this->completed_date = false;
+        $this->update_meta( '_give_completed_date', '' );
+
+        // Clear the This Month earnings (this_monththis_month is NOT a typo)
+        delete_transient( md5( 'give_earnings_this_monththis_month' ) );
+    }
+
+    /**
+     * Process when a payment moves to revoked
+     *
+     * @since  1.5
+     * @return void
+     */
+    private function process_revoked() {
+        $process_revoked = true;
+
+        // If the payment was not in publish, don't decrement stats as they were never incremented
+        if ( 'publish' != $this->old_status || 'revoked' != $this->status ) {
+            $process_revoked = false;
+        }
+
+        // Allow extensions to filter for their own payment types, Example: Recurring Payments
+        $process_revoked = apply_filters( 'give_should_process_revoked', $process_revoked, $this );
+
+        if ( false === $process_revoked ) {
+            return;
+        }
+
+        $decrease_store_earnings = apply_filters( 'give_decrease_store_earnings_on_revoked', true, $this );
+        $decrease_customer_value = apply_filters( 'give_decrease_customer_value_on_revoked', true, $this );
+        $decrease_purchase_count = apply_filters( 'give_decrease_customer_purchase_count_on_revoked', true, $this );
+
+        $this->maybe_alter_stats( $decrease_store_earnings, $decrease_customer_value, $decrease_purchase_count );
+        $this->delete_sales_logs();
+
+        $this->completed_date = false;
+        $this->update_meta( '_give_completed_date', '' );
+
+        // Clear the This Month earnings (this_monththis_month is NOT a typo)
+        delete_transient( md5( 'give_earnings_this_monththis_month' ) );
+    }
+
 	/**
 	 * Used during the process of moving to refunded or pending, to decrement stats
 	 *
 	 * @since  1.5
+	 * @access private
 	 *
-	 * @param  bool $alter_store_earnings If the method should alter the store earnings
-	 * @param  bool $alter_customer_value If the method should reduce the customer value
-	 * @param  bool $alter_customer_purchase_count If the method should reduce the customer's purchase count
+	 * @param  bool $alter_store_earnings          If the method should alter the store earnings
+	 * @param  bool $alter_customer_value          If the method should reduce the customer value
+	 * @param  bool $alter_customer_purchase_count If the method should reduce the customer's donation count
 	 *
 	 * @return void
 	 */
@@ -1609,9 +1756,11 @@ final class Give_Payment {
 	}
 
 	/**
-	 * Delete sales logs for this purchase
+	 * Delete sales logs for this donation
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return void
 	 */
 	private function delete_sales_logs() {
@@ -1643,6 +1792,8 @@ final class Give_Payment {
 	 * Setup the payment completed date
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return string The date the payment was completed
 	 */
 	private function setup_completed_date() {
@@ -1661,6 +1812,8 @@ final class Give_Payment {
 	 * Setup the payment mode
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return string The payment mode
 	 */
 	private function setup_mode() {
@@ -1671,6 +1824,8 @@ final class Give_Payment {
 	 * Setup the payment total
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return float The payment total
 	 */
 	private function setup_total() {
@@ -1689,9 +1844,25 @@ final class Give_Payment {
 	}
 
 	/**
+	 * Setup the payment subtotal
+	 *
+	 * @since  1.5
+	 * @access private
+	 *
+	 * @return float The subtotal of the payment
+	 */
+	private function setup_subtotal() {
+		$subtotal = $this->total;
+
+		return $subtotal;
+	}
+
+	/**
 	 * Setup the payment fees
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return float The fees total for the payment
 	 */
 	private function setup_fees_total() {
@@ -1709,43 +1880,12 @@ final class Give_Payment {
 	}
 
 	/**
-	 * Setup the payment subtotal
-	 *
-	 * @since  1.5
-	 * @return float The subtotal of the payment
-	 */
-	private function setup_subtotal() {
-
-		//@TODO: Add fees to sub
-		$subtotal        = 0;
-		$payment_details = $this->payment_details;
-
-		if ( is_array( $payment_details ) ) {
-
-			foreach ( $payment_details as $item ) {
-
-				if ( isset( $item['subtotal'] ) ) {
-
-					$subtotal += $item['subtotal'];
-
-				}
-
-			}
-
-		} else {
-
-			$subtotal = $this->total;
-
-		}
-
-		return $subtotal;
-	}
-
-	/**
 	 * Setup the currency code
 	 *
 	 * @since  1.5
-	 * @return string              The currency for the payment
+	 * @access private
+	 *
+	 * @return string The currency for the payment
 	 */
 	private function setup_currency() {
 		$currency = isset( $this->payment_meta['currency'] ) ? $this->payment_meta['currency'] : apply_filters( 'give_payment_currency_default', give_get_currency(), $this );
@@ -1757,7 +1897,9 @@ final class Give_Payment {
 	 * Setup any fees associated with the payment
 	 *
 	 * @since  1.5
-	 * @return array               The Fees
+	 * @access private
+	 *
+	 * @return array The Fees
 	 */
 	private function setup_fees() {
 		$payment_fees = isset( $this->payment_meta['fees'] ) ? $this->payment_meta['fees'] : array();
@@ -1769,6 +1911,8 @@ final class Give_Payment {
 	 * Setup the gateway used for the payment
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return string The gateway
 	 */
 	private function setup_gateway() {
@@ -1778,10 +1922,12 @@ final class Give_Payment {
 	}
 
 	/**
-	 * Setup the transaction ID
+	 * Setup the donation ID
 	 *
 	 * @since  1.5
-	 * @return string The transaction ID for the payment
+	 * @access private
+	 *
+	 * @return string The donation ID
 	 */
 	private function setup_transaction_id() {
 		$transaction_id = $this->get_meta( '_give_payment_transaction_id', true );
@@ -1789,7 +1935,7 @@ final class Give_Payment {
 		if ( empty( $transaction_id ) || (int) $transaction_id === (int) $this->ID ) {
 
 			$gateway        = $this->gateway;
-			$transaction_id = apply_filters( 'give_get_payment_transaction_id-' . $gateway, $this->ID );
+			$transaction_id = apply_filters( "give_get_payment_transaction_id-{$gateway}", $this->ID );
 
 		}
 
@@ -1800,6 +1946,8 @@ final class Give_Payment {
 	 * Setup the IP Address for the payment
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return string The IP address for the payment
 	 */
 	private function setup_ip() {
@@ -1812,6 +1960,8 @@ final class Give_Payment {
 	 * Setup the customer ID
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return int The Customer ID
 	 */
 	private function setup_customer_id() {
@@ -1821,9 +1971,11 @@ final class Give_Payment {
 	}
 
 	/**
-	 * Setup the User ID associated with the purchase
+	 * Setup the User ID associated with the donation
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return int The User ID
 	 */
 	private function setup_user_id() {
@@ -1833,9 +1985,11 @@ final class Give_Payment {
 	}
 
 	/**
-	 * Setup the email address for the purchase
+	 * Setup the email address for the donation
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return string The email address for the payment
 	 */
 	private function setup_email() {
@@ -1852,7 +2006,9 @@ final class Give_Payment {
 	 * Setup the user info
 	 *
 	 * @since  1.5
-	 * @return array               The user info associated with the payment
+	 * @access private
+	 *
+	 * @return array The user info associated with the payment
 	 */
 	private function setup_user_info() {
 		$defaults = array(
@@ -1862,7 +2018,6 @@ final class Give_Payment {
 
 		$user_info = isset( $this->payment_meta['user_info'] ) ? maybe_unserialize( $this->payment_meta['user_info'] ) : array();
 		$user_info = wp_parse_args( $user_info, $defaults );
-
 
 		if ( empty( $user_info ) ) {
 			// Get the customer, but only if it's been created
@@ -1874,6 +2029,7 @@ final class Give_Payment {
 					'first_name' => $name[0],
 					'last_name'  => $name[1],
 					'email'      => $customer->email,
+					'discount'   => 'none',
 				);
 			}
 		} else {
@@ -1909,15 +2065,19 @@ final class Give_Payment {
 		}
 
 		return $user_info;
+
 	}
 
 	/**
 	 * Setup the Address for the payment
 	 *
 	 * @since  1.5
-	 * @return array               The Address information for the payment
+	 * @access private
+	 *
+	 * @return array The Address information for the payment
 	 */
 	private function setup_address() {
+
 		$address = ! empty( $this->payment_meta['user_info']['address'] ) ? $this->payment_meta['user_info']['address'] : array(
 			'line1'   => '',
 			'line2'   => '',
@@ -1931,9 +2091,55 @@ final class Give_Payment {
 	}
 
 	/**
+	 * Setup the form title
+	 *
+	 * @since  1.5
+	 * @access private
+	 *
+	 * @return string The Form Title
+	 */
+	private function setup_form_title() {
+
+		$form_id = $this->get_meta( '_give_payment_form_title', true );
+
+		return $form_id;
+	}
+
+	/**
+	 * Setup the form ID
+	 *
+	 * @since  1.5
+	 * @access private
+	 *
+	 * @return int The Form ID
+	 */
+	private function setup_form_id() {
+
+		$form_id = $this->get_meta( '_give_payment_form_id', true );
+
+		return $form_id;
+	}
+
+	/**
+	 * Setup the price ID
+	 *
+	 * @since  1.5
+	 * @access private
+	 *
+	 * @return int The Form Price ID
+	 */
+	private function setup_price_id() {
+		$price_id = $this->get_meta( '_give_payment_price_id', true );
+
+		return $price_id;
+	}
+
+	/**
 	 * Setup the payment key
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return string The Payment Key
 	 */
 	private function setup_payment_key() {
@@ -1946,6 +2152,8 @@ final class Give_Payment {
 	 * Setup the payment number
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return int|string Integer by default, or string if sequential order numbers is enabled
 	 */
 	private function setup_payment_number() {
@@ -1967,32 +2175,9 @@ final class Give_Payment {
 	}
 
 	/**
-	 * Setup the donation details
-	 *
-	 * @since  1.5
-	 * @return array The donation details
-	 */
-	private function setup_payment_details() {
-
-		$payment_details = isset( $this->payment_meta['payment_details'] ) ? maybe_unserialize( $this->payment_meta['payment_details'] ) : array();
-
-		return $payment_details;
-	}
-
-	/**
-	 * Setup the donations array
-	 *
-	 * @since  1.5
-	 * @return array Donations associated with this payment
-	 */
-	private function setup_donations() {
-		$donations = isset( $this->payment_meta['donations'] ) ? maybe_unserialize( $this->payment_meta['donations'] ) : array();
-
-		return $donations;
-	}
-
-	/**
 	 * Converts this object into an array for special cases
+	 *
+	 * @access public
 	 *
 	 * @return array The payment object as an array
 	 */
@@ -2001,19 +2186,11 @@ final class Give_Payment {
 	}
 
 	/**
-	 * Retrieve payment cart details
-	 *
-	 * @since  2.5.1
-	 * @return array Cart details array
-	 */
-	private function get_payment_details() {
-		return apply_filters( 'give_payment_payment_details', $this->payment_details, $this->ID, $this );
-	}
-
-	/**
 	 * Retrieve payment completion date
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return string Date payment was completed
 	 */
 	private function get_completed_date() {
@@ -2024,6 +2201,8 @@ final class Give_Payment {
 	 * Retrieve payment subtotal
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return float Payment subtotal
 	 */
 	private function get_subtotal() {
@@ -2034,6 +2213,8 @@ final class Give_Payment {
 	 * Retrieve payment currency
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return string Payment currency code
 	 */
 	private function get_currency() {
@@ -2044,6 +2225,8 @@ final class Give_Payment {
 	 * Retrieve payment gateway
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return string Gateway used
 	 */
 	private function get_gateway() {
@@ -2051,10 +2234,12 @@ final class Give_Payment {
 	}
 
 	/**
-	 * Retrieve payment transaction ID
+	 * Retrieve donation ID
 	 *
 	 * @since  1.5
-	 * @return string Transaction ID from merchant processor
+	 * @access private
+	 *
+	 * @return string Donation ID from merchant processor
 	 */
 	private function get_transaction_id() {
 		return apply_filters( 'give_get_payment_transaction_id', $this->transaction_id, $this->ID, $this );
@@ -2064,6 +2249,8 @@ final class Give_Payment {
 	 * Retrieve payment IP
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return string Payment IP address
 	 */
 	private function get_ip() {
@@ -2074,6 +2261,8 @@ final class Give_Payment {
 	 * Retrieve payment customer ID
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return int Payment customer ID
 	 */
 	private function get_customer_id() {
@@ -2084,6 +2273,8 @@ final class Give_Payment {
 	 * Retrieve payment user ID
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return int Payment user ID
 	 */
 	private function get_user_id() {
@@ -2094,6 +2285,8 @@ final class Give_Payment {
 	 * Retrieve payment email
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return string Payment customer email
 	 */
 	private function get_email() {
@@ -2104,6 +2297,8 @@ final class Give_Payment {
 	 * Retrieve payment user info
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return array Payment user info
 	 */
 	private function get_user_info() {
@@ -2114,6 +2309,8 @@ final class Give_Payment {
 	 * Retrieve payment billing address
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return array Payment billing address
 	 */
 	private function get_address() {
@@ -2124,6 +2321,8 @@ final class Give_Payment {
 	 * Retrieve payment key
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return string Payment key
 	 */
 	private function get_key() {
@@ -2131,23 +2330,27 @@ final class Give_Payment {
 	}
 
 	/**
+	 * Retrieve payment form id
+	 *
+	 * @since  1.5
+	 * @access private
+	 *
+	 * @return string Payment form id
+	 */
+	private function get_form_id() {
+		return apply_filters( 'give_payment_form_id', $this->form_id, $this->ID, $this );
+	}
+
+	/**
 	 * Retrieve payment number
 	 *
 	 * @since  1.5
+	 * @access private
+	 *
 	 * @return int|string Payment number
 	 */
 	private function get_number() {
 		return apply_filters( 'give_payment_number', $this->number, $this->ID, $this );
-	}
-
-	/**
-	 * Retrieve donations on payment
-	 *
-	 * @since  1.5
-	 * @return array Payment downloads
-	 */
-	private function get_donations() {
-		return apply_filters( 'give_payment_meta_donations', $this->donations, $this->ID, $this );
 	}
 
 }

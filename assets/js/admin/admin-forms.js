@@ -119,6 +119,9 @@ jQuery.noConflict();
 
         //Goals
         var goal_option = $('.cmb2-id--give-goal-option');
+        //Close Form when Goal Achieved
+        var close_form_when_goal_achieved_option = $('.cmb2-id--give-close-form-when-goal-achieved input:radio');
+
         goal_option.on('change', function () {
             var goal_option = $('.cmb2-id--give-goal-option input:radio:checked').val();
             if (goal_option === 'no') {
@@ -126,21 +129,28 @@ jQuery.noConflict();
                 $('.cmb2-id--give-set-goal').hide();
                 $('.cmb2-id--give-goal-format').hide();
                 $('.cmb2-id--give-goal-color').hide();
+                $('.cmb2-id--give-close-form-when-goal-achieved').hide();
+                $('.cmb2-id--give-form-goal-achieved-message').hide();
             } else {
                 $('.cmb2-id--give-set-goal').show();
                 $('.cmb2-id--give-goal-format').show();
                 $('.cmb2-id--give-goal-color').show();
+                $('.cmb2-id--give-close-form-when-goal-achieved').show();
+
+                var close_form_when_goal_achieved_option_val = $('.cmb2-id--give-close-form-when-goal-achieved input:radio:checked').val();
+
+                if (close_form_when_goal_achieved_option_val === 'yes') {
+                    $('.cmb2-id--give-form-goal-achieved-message').show();
+                }
             }
         }).change();
 
-        //Dedication
-        var dedication_option = $('.cmb2-id--give-dedication-option');
-        dedication_option.on('change', function () {
-            var dedication_option = $('.cmb2-id--give-dedication-option input:radio:checked').val();
-            if (dedication_option === 'no') {
-                $('.cmb2-id--give-dedication-text').hide();
+        close_form_when_goal_achieved_option.on('change', function () {
+            var close_form_when_goal_achieved_option_val = $('.cmb2-id--give-close-form-when-goal-achieved input:radio:checked').val();
+            if (close_form_when_goal_achieved_option_val === 'no') {
+                $('.cmb2-id--give-form-goal-achieved-message').hide();
             } else {
-                $('.cmb2-id--give-dedication-text').show();
+                $('.cmb2-id--give-form-goal-achieved-message').show();
             }
         }).change();
 

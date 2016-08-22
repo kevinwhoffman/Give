@@ -1,10 +1,10 @@
 === Give - WordPress Donation Plugin ===
 Contributors: wordimpress, dlocc, webdevmattcrom
-Donate link: http://givewp.com/
+Donate link: https://givewp.com/
 Tags: donation, donations, donation plugin, wordpress donation plugin, wp donation, ecommerce, e-commerce, fundraising, fundraiser, crowdfunding, wordpress donations, commerce, wordpress ecommerce, giving, charity, donate, gifts, non-profit, paypal, stripe, churches, nonprofit, paypal donations, paypal donate, stripe donations, stripe donate, authorize.net, authorize.net donations
 Requires at least: 4.0
-Tested up to: 4.5.1
-Stable tag: 1.4.2
+Tested up to: 4.6
+Stable tag: 1.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -12,7 +12,7 @@ Democratizing Generosity - Empower your cause: start accepting donations on Word
 
 == Description ==
 
-**[Give's](https://givewp.com "Visit the the Give website")** goal is to "Democratize Generosity". Give is the most robust WordPress plugin available for accepting donations. Upon activation, Give provides you with powerful features  towards helping your raise more funds for your cause.
+**[Give's](https://givewp.com "Visit the Give website")** goal is to "Democratize Generosity". Give is the most robust WordPress plugin available for accepting donations. Upon activation, Give provides you with powerful features towards helping your raise more funds for your cause.
 
 [youtube https://www.youtube.com/watch?v=gNdEelhjoKE]
 
@@ -54,24 +54,32 @@ We earn money by selling [premium add-ons](https://givewp.com/addons/ "View all 
 
 = Easy to Customize and Enhance =
 
-Give is built by [WordImpress](http://wordimpress.com "Visit the the developers of Give - WordImpress"), our plugins are built from the ground up to be intuitive and easy to use. By following along with our [Getting Stated Guide](https://givewp.com/documentation/core/give-101/ "Give 101 - Getting started using Give to accept donations on WordPress"), setting up Give to accept donations on WordPress is simple and easy.
+Give is built by [WordImpress](https://wordimpress.com "Visit the developers of Give - WordImpress"), our plugins are built from the ground up to be intuitive and easy to use. By following along with our [Getting Stated Guide](https://givewp.com/documentation/core/give-101/ "Give 101 - Getting started using Give to accept donations on WordPress"), setting up Give to accept donations on WordPress is simple and easy.
 
 Do you have some development experience? We've built in an advanced templating system similar to the ones found in many of WordPress' top plugins that makes customizing many of Give's frontend elements upgrade proof and extremely flexible. Run into some trouble? We're here to help! Along with the plugin is a support team that is dedicated, fast to respond, and always willing to squash bugs and help troubleshoot.
+
+Here's some great developer-oriented tutorials and docs to help you customize Give to your liking:
+
+* [Create Dramatic Donation Email Receipts](https://givewp.com/create-dramatic-donation-email-receipts/)
+* [Load a Whole Donation Form in a Popup](https://givewp.com/load-donation-form-popup-give/)
+* [Useing the Give API to Create Charts with ChartJS](https://givewp.com/using-give-api-create-charts-chartjs/)
+* [Themeing with Give](https://givewp.com/documentation/developers/themeing-with-give/)
+* [How to Create Custom Form Fields](https://givewp.com/documentation/developers/how-to-create-custom-form-fields/)
 
 = Connect with Give =
 
 Stay in touch with us for important plugin news and updates:
 
-* **[Give Website](https://givewp.com "Visit the the Give website")**
+* **[Give Website](https://givewp.com "Visit the Give website")**
 * **[Give Add-ons](https://givewp.com/addons "View all Give Add-ons")**
 * **[Newsletter](http://eepurl.com/bggG99 "Subscribe to Give via MailChimp")**
-* **[Facebook](http://facebook.com/wpgive "Visit the Give on Facebook")**
-* **[GitHub](https://github.com/WordImpress/Give "Visit the the developers of Give - WordImpress")**
-* **[WordImpress](http://wordimpress.com "Visit the the developers of Give - WordImpress")**
+* **[Facebook](https://facebook.com/wpgive "Visit the Give on Facebook")**
+* **[GitHub](https://github.com/WordImpress/Give "Visit the developers of Give - WordImpress")**
+* **[WordImpress](https://wordimpress.com "Visit the developers of Give - WordImpress")**
 
 = Contribute to Give =
 
-This plugin is open source and we're always looking for more contributors. Whether you know another language, can code like no ones business, or just have an idea, we would love your help and input. To contribute to Give please head over to [our website](https://givewp.com "Visit the the Give website") or view/fork/watch the [GitHub repository](https://github.com/WordImpress/Give "Visit the the Give GitHub Repo") to learn more about what issues we're tackling and the project is developing.
+This plugin is open source and we're always looking for more contributors. Whether you know another language, can code like no ones business, or just have an idea, we would love your help and input. To contribute to Give please head over to [our website](https://givewp.com "Visit the Give website") or view/fork/watch the [GitHub repository](https://github.com/WordImpress/Give "Visit the Give GitHub Repo") to learn more about what issues we're tackling and the project is developing.
 
 = A Tribute to Open Source =
 
@@ -94,17 +102,33 @@ Give is a tribute to the spirit and philosophy of open source. We at WordImpress
 
 Automatic installation is the easiest option as WordPress handles the file transfers itself and you don't need to leave your web browser. To do an automatic install of Give, log in to your WordPress dashboard, navigate to the Plugins menu and click "Add New".
 
-In the search field type "Give" and click Search Plugins. Once you have found the plugin you can view details about it such as the the point release, rating and description. Most importantly of course, you can install it by simply clicking "Install Now".
+In the search field type "Give" and click Search Plugins. Once you have found the plugin you can view details about it such as the point release, rating and description. Most importantly of course, you can install it by simply clicking "Install Now".
 
 = Manual installation =
 
-The manual installation method involves downloading our donation plugin and uploading it to your server via your favorite FTP application. The WordPress codex contains [instructions on how to do this here](http://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
+The manual installation method involves downloading our donation plugin and uploading it to your server via your favorite FTP application. The WordPress codex contains [instructions on how to do this here](https://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
 
 = Updating =
 
 Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
 
 == Frequently Asked Questions ==
+
+= Where can I learn more about how to use Give? =
+
+We have extensive documentation on installing and configuring Give [on our website](https://givewp.com/documentation/). We suggest starting with the [Give 101 article](https://givewp.com/documentation/core/give-101/).
+
+= How can I get support for Give? =
+
+We work hard to the best support possible for Give. The [WordPress.org Support Forum](https://wordpress.org/support/plugin/give) is used for free community based support. We continually monitor the forum and do our best to provide ensure everyone gets an answer. [Priority support](https://givewp.com/support/) is given to users who have an active license for one of Give's [Add-ons](https://givewp.com/addons/) or [Bundles](https://givewp.com/addon-bundles/). This is email based support
+
+= Do you have any demos? =
+
+Yes! We have several live examples of Give displaying usage with many [popular WordPress Themes here](https://givewp.com/demos/).
+
+= Do you have Case Studies of Nonprofits using Give? =
+
+Yes! We call them "Give Stories". [You can read them all here](https://givewp.com/give-stories/).
 
 = How is Give better than *Gravity Forms* for accepting donations through WordPress? =
 
@@ -120,7 +144,7 @@ We also really like WooCommerce. It's hands-down the most robust eCommerce platf
 
 2. Donation form fields can appear within a modal window (as shown here), be revealed with a nice sliding animation, or display entirely on the page (default).
 
-3. Give makes the donation process simple and easy for your donors. This helps maximize coversion rates and further empower your cause.
+3. Give makes the donation process simple and easy for your donors. This helps maximize conversion rates and further empower your cause.
 
 4. The multi-level donation amount functionality allows you to set different giving levels for your donors to choose from. In addition, you can allow donors to specify custom donation amounts and even set donation goals.
 
@@ -140,10 +164,97 @@ We also really like WooCommerce. It's hands-down the most robust eCommerce platf
 
 == Changelog ==
 
-= 1.5:  =
-* New: When a donor creates an account via the donation form both the admin and donor get notification emails sent using the Give email templates
+= 1.7 =
+* New: Custom HTML5 alert messages provide better context for donors - https://github.com/WordImpress/Give/issues/351
+* New: Give CLI now included in Core for developers - https://github.com/WordImpress/Give/issues/841
+* New: Donation details screen now displays more information and is mobile responsive - https://github.com/WordImpress/Give/issues/887
+* Tweak: Organize data with a logical relationship in grids for table accessibility - https://github.com/WordImpress/Give/issues/922
+* Tweak: Terminology changes - "Transactions" now called "Donations" and "Payments" now termed "Donation" in WP-admin - https://github.com/WordImpress/Give/issues/896
+* Fix: User able to donate minimum amount then custom minimum amount with multi level donation form - https://github.com/WordImpress/Give/issues/712
 
-= 1.4.3:  =
+= 1.6.1 =
+* Fix: Donation date discrepancy in transaction details view - https://github.com/WordImpress/Give/issues/898
+* Fix: Switching donation form in transaction view "-2" appears when no form set - https://github.com/WordImpress/Give/issues/877
+
+= 1.6: August 11, 2016 =
+* New: Added email tag support to Offline Donation Admin Notification - https://github.com/WordImpress/Give/issues/846
+* New: Added a "Reset Password" option to the donation form if the user is prompted to login - https://github.com/WordImpress/Give/issues/723
+* New: Add the ability for admins to switch a transaction to a different form - https://github.com/WordImpress/Give/issues/429
+* New: Setting to adjust the number of decimal spaces. Give now support zero and three decimal currencies. - https://github.com/WordImpress/Give/issues/738
+* New: Human readable large monetary goal formats. For instance, if you have a goal of $2 million it will not display as "2,000,000" but rather "2 million". - https://github.com/WordImpress/Give/issues/650
+* New: Address Give's right-to-left issues with a complete audit & resolution - thanks @ramiy! - https://github.com/WordImpress/Give/issues/736
+* New: New template added for Give goals. - https://github.com/WordImpress/Give/issues/411
+* New: Easier and more understandable strings according for translators. - thanks @ramiy! - https://github.com/WordImpress/Give/issues/451
+* New: Added a new filter "give_pdf_export_logo" to easily customize the export logo. - https://github.com/WordImpress/Give/issues/802
+* New: Customer meta class added for updating and saving donor data for non-users outside usermeta. - https://github.com/WordImpress/Give/issues/653
+* New: Conditional functions introduced is_give_form(), is_give_category(), is_give_tag(), and is_give_taxonomy() - https://github.com/WordImpress/Give/issues/832
+* New: Donation receipt email previews now allow you to view actual payment data and switch between transactions. Add-on specific email tags will render when actual data is previewed. - https://github.com/WordImpress/Give/issues/274
+* New: Consolidated the number of columns within the transaction details screen. - https://github.com/WordImpress/Give/issues/814
+* Tweak: Update the country dropdown to use the new ISO country codes for islands in Dutch West Indies. - https://github.com/WordImpress/Give/issues/698
+* Tweak: Updated to the latest version of CMB2 & tested compatibility. - https://github.com/WordImpress/Give/issues/670
+* Tweak: Remove invalid @description from PHP inline doc blocks. - https://github.com/WordImpress/Give/issues/733
+* Tweak: Incorporate proper sanitization for i18n strings. - https://github.com/WordImpress/Give/issues/471
+* Tweak: Accessibility page headings added to screens in wp-admin. - https://github.com/WordImpress/Give/issues/820
+* Tweak: Unify wp_die() throughout codebase and add title and HTML status response codes. - https://github.com/WordImpress/Give/issues/828
+* Fix: Transaction list and donor donation list design break on tablet and mobile. - https://github.com/WordImpress/Give/issues/813
+* Fix: Unrendered html in multi-level donation confirmation emails. - https://github.com/WordImpress/Give/issues/754
+* Fix: Text editor does not have same height for visual mode and text mode. - https://github.com/WordImpress/Give/issues/688
+* Fix: Auto populate state list is not working on transaction detail page. - https://github.com/WordImpress/Give/issues/715
+* Fix: Unable to view payment history for donors with unusual characters in the email. - https://github.com/WordImpress/Give/issues/717
+* Fix: Mixed content warning with single donation form thumbnail placeholder image. - https://github.com/WordImpress/Give/issues/768
+* Fix: Secure SSL padlock icon and style no longer broken. - https://github.com/WordImpress/Give/issues/769
+* Fix: Categories and tags are registering permissions incorrectly upon install. - https://github.com/WordImpress/Give/issues/725
+* Fix: Amount field not formatting on focus out & lingering validation tooltip issues. - https://github.com/WordImpress/Give/issues/778
+* Fix: Auto populate the correct donation level when user adds a matching custom amount. - https://github.com/WordImpress/Give/issues/730
+* Fix: The "Export Donation History" csv no longer had the "Form Title" column and contained unnecessary columns. - https://github.com/WordImpress/Give/issues/757
+* Fix: A CSS conflict appeared with some themes when users view the donation receipt in browser and admins preview emails in wp-admin. - https://github.com/WordImpress/Give/issues/818
+* Fix: Prevent editor shortcode generator from displaying for users who don't have access to Give donation form editing. - https://github.com/WordImpress/Give/issues/845
+
+= 1.5.2: June 31, 2016 =
+* New: Added an addition "status" column for donation logs - https://github.com/WordImpress/Give/issues/684
+* Tweak: Hide the submit button for the API Tab in Settings & improved the field description - https://github.com/WordImpress/Give/issues/681
+* Fix: Deleted unnecessary user capabilities and resolved ones with typos causing issues with viewing and publishing donation forms for admins on new installs - https://github.com/WordImpress/Give/issues/671 and https://github.com/WordImpress/Give/issues/662
+* Fix: Donation amount and count get reduced when delete pending donation - thanks @farookibrahim - https://github.com/WordImpress/Give/issues/677
+* Fix: Broken link when clicking on donors name from transactions list in wp-admin - https://github.com/WordImpress/Give/issues/680
+
+= 1.5.1: June 30, 2016 =
+* Fix: The give_forms post type doesn't register correctly on new installs therefore users weren't seeing the "Add Form" or "Edit Form" options within WP-Admin - https://github.com/WordImpress/Give/issues/671 and https://wordpress.org/support/topic/the-add-forum-tab-not-showing?replies=4#post-8587308
+
+= 1.5: June 29, 2016 =
+* New: Easily reorder payment gateways with the new drag-and-drop gateway reorder capability within settings - https://github.com/WordImpress/Give/issues/391
+* New: Implement honeypot hidden field to help prevent spam donation form submissions - https://github.com/WordImpress/Give/issues/424
+* New: Export donation history based on a date range exports in "Reports > Export > Export Donation History"- https://github.com/WordImpress/Give/issues/414
+* New: Automatically close a form when it reaches its Goal - https://github.com/WordImpress/Give/issues/168
+* New: Added the ability to delete all test transactions under "Donations > Reports > Tools" - https://github.com/WordImpress/Give/issues/263
+* New: Recalculate stats tool now available to recount individual donor statistics, delete test transactions, or reset all your statistics entirely - https://github.com/WordImpress/Give/issues/441
+* New: New Give_Payments class added which allows easier development for donation payments - https://github.com/WordImpress/Give/issues/504
+* New: Added "Test Mode" labels to more easily identify donations made while Give is in Test Mode - https://github.com/WordImpress/Give/issues/188
+* New: Template wrapper support for the "Catch Evolution" theme added - https://github.com/WordImpress/Give/issues/632
+* New: Export additional data and control the export columns for donors under Reports > Export > Export Donors in CSV - https://github.com/WordImpress/Give/issues/630
+* New: South Korean Won added to list of currencies - https://github.com/WordImpress/Give/issues/624
+* New: Moroccan Dirham added to list of currencies - https://github.com/WordImpress/Give/issues/381
+* New: South African Rand added to list of currencies - https://github.com/WordImpress/Give/issues/624
+* Tweak: Now when a multi-level donation is made the multi-level labels will display on the confirmation page, within the transactions listing page, and also attached to the {donation} email tag which outputs the email receipts - https://github.com/WordImpress/Give/issues/175
+* Tweak: Added donor name to the donation receipt and reordered the rows for a more logical flow - https://github.com/WordImpress/Give/issues/645
+* Tweak: Removed the French translation files included because, thanks to all French polyglots, we have been translated in full - https://translate.wordpress.org/locale/fr/default/wp-plugins/give
+* Tweak: Removed Grunt in favor of Gulp for compiling pot files - https://github.com/WordImpress/Give/issues/666
+* Tweak: Removed hosted translations in favor of public GlotPress translations
+* Tweak: Rewrite of give_get_current_page_url to fix issues with domain mapped server with $_SERVER['SERVER_PORT'] - https://github.com/WordImpress/Give/issues/622
+* Fix: Transactions Status Changes Causes Donation Form Income Amounts + Goals to Not Calculate Correctly - https://github.com/WordImpress/Give/issues/188
+* Fix: Per form Offline donations gateway's "Request Billing Information" checkbox doesn't properly override the global setting - https://github.com/WordImpress/Give/issues/649
+* Fix: Reports filter custom date range option when selected causes the refresh reports button to overlap - https://github.com/WordImpress/Give/issues/626
+* Fix: Reports graph tooltips not displaying currency properly formatted - https://github.com/WordImpress/Give/issues/620
+* Fix: Attaching a new user to a donor isn't updating - https://github.com/WordImpress/Give/issues/644
+* Fix: Remove shortcode generator button when visual editor disabled - https://github.com/WordImpress/Give/issues/638
+* Fix: Bug with shortcode & show_content argument when two of the same forms on a page displaying the content incorrectly when set to none - https://github.com/WordImpress/Give/issues/634
+
+= 1.4.5: May 12, 2016 =
+* Hotfix: Fixed a bug introduced which causes the custom amount minimum to be improperly calculated - https://github.com/WordImpress/Give/issues/616
+
+= 1.4.4: May 12, 2016 =
+* Hotfix: Version 1.4.3 breaks modal popup display method - https://github.com/WordImpress/Give/issues/615
+
+= 1.4.3: May 12, 2016 =
 * Fix: Update the email address of a customer record when the email of a user is updated via the WordPress profile updater - https://github.com/WordImpress/Give/issues/607
 * Fix: Bug if the donation form's custom amount minimum is set to 0.00 the warning message would still display - https://github.com/WordImpress/Give/issues/604
 * Fix: Bug with email access and the Donation History shortcode pagination not counting properly - https://github.com/WordImpress/Give/issues/600
@@ -161,15 +272,15 @@ We also really like WooCommerce. It's hands-down the most robust eCommerce platf
 * Tweak: Hid the "ID" column from the multi-level repeater table because it served no real purpose for admins - https://github.com/WordImpress/Give/issues/554
 
 = 1.4.1: April 12, 2016 =
-* Fix: Member-only donation forms don't display member-only validation responses properly -  https://github.com/WordImpress/Give/issues/551
-* Fix: Email access cookie path set incorrectly breaks viewing details -  https://github.com/WordImpress/Give/issues/570
-* Fix: Validation conflicts with MemberPress - thanks @jimwebb -  https://github.com/WordImpress/Give/issues/568
-* Fix: If no Give logs under Settings > Reports > Logs then the log navigation does not display -  https://github.com/WordImpress/Give/issues/564
+* Fix: Member-only donation forms don't display member-only validation responses properly - https://github.com/WordImpress/Give/issues/551
+* Fix: Email access cookie path set incorrectly breaks viewing details - https://github.com/WordImpress/Give/issues/570
+* Fix: Validation conflicts with MemberPress - thanks @jimwebb - https://github.com/WordImpress/Give/issues/568
+* Fix: If no Give logs under Settings > Reports > Logs then the log navigation does not display - https://github.com/WordImpress/Give/issues/564
 * Fix: Login/Cancel/Register within donation form don't trigger float-labels - https://github.com/WordImpress/Give/issues/574
 * Fix: Login/Cancel/Register within donation form has problems maintaining gateway-specific fields when changing gateways - https://github.com/WordImpress/Give/issues/574
-* Tweak: Deprecated give_no_guest_checkout() in favor of give_logged_in_only() -  https://github.com/WordImpress/Give/issues/551
-* Tweak: Clean up '&amp' encoded ampersands for PayPal standard -  https://github.com/WordImpress/Give/issues/562
-* Tweak: Added a check for DOM and MBString PHP extensions in System Info tab -  https://github.com/WordImpress/Give/issues/560
+* Tweak: Deprecated give_no_guest_checkout() in favor of give_logged_in_only() - https://github.com/WordImpress/Give/issues/551
+* Tweak: Clean up '&amp' encoded ampersands for PayPal standard - https://github.com/WordImpress/Give/issues/562
+* Tweak: Added a check for DOM and MBString PHP extensions in System Info tab - https://github.com/WordImpress/Give/issues/560
 
 = 1.4: April 5, 2016 =
 * New: Donors now have the ability to view their donation history using only the email they donated with via the new "Email Access" functionality that can be enabled under Settings > Advanced - https://github.com/WordImpress/Give/pull/496
@@ -192,5 +303,9 @@ We also really like WooCommerce. It's hands-down the most robust eCommerce platf
 * Fix: Transactions with a "cancelled" status are not shown in the wp-admin Transactions table - thanks @pryley - https://github.com/WordImpress/Give/issues/514
 * Fix: Alternative to fopen provided for PDF exports - https://github.com/WordImpress/Give/issues/511
 
-= Earlier versions =
-For the changelog of earlier versions, please refer to the separate changelog.txt file.
+[See full changelog here](https://plugins.svn.wordpress.org/give/trunk/changelog.txt)
+
+== Upgrade Notice ==
+
+= 1.4.3 =
+Fixes for user profile emails, custom minimum amounts, donation history pagination, and multi-site install process.
